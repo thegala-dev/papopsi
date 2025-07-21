@@ -14,8 +14,7 @@ class RequestData extends ValueObject
         public GeoData $geoData,
         public string $language,
         public DateTimeInterface $time
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {
@@ -49,8 +48,8 @@ class RequestData extends ValueObject
     {
         /** @var Carbon $time */
         $hour = (int) $this->time->format('H');
-        $min  = (int) $this->time->format('i');
-        $time = $hour + $min/60;
+        $min = (int) $this->time->format('i');
+        $time = $hour + $min / 60;
 
         if ($time >= 21 || $time < 9) {
             return MealType::BREAKFAST;

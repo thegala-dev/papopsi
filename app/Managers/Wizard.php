@@ -16,18 +16,16 @@ use RuntimeException;
 
 class Wizard implements Arrayable, Jsonable, JsonSerializable
 {
-
     public function __construct(
         public WizardSteps $step,
         public MealRequestContext $context
-    )  {
-    }
+    ) {}
 
     public static function start(): Wizard
     {
         return new self(
             step: WizardSteps::INTRO,
-            context: new MealRequestContext()
+            context: new MealRequestContext
         );
     }
 
@@ -41,16 +39,20 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
         switch ($this->step) {
             case WizardSteps::INTRO:
                 $this->step = WizardSteps::AGE;
+
                 return route('wizard.steps.age');
             case WizardSteps::AGE:
                 $this->step = WizardSteps::CONTEXT;
+
                 return route('wizard.steps.context');
             case WizardSteps::CONTEXT:
             case WizardSteps::DETAILS:
                 $this->step = WizardSteps::SUMMARY;
+
                 return route('wizard.steps.summary');
             case WizardSteps::SUMMARY:
                 $this->step = WizardSteps::DETAILS;
+
                 return route('wizard.steps.details');
         }
 
@@ -77,14 +79,17 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
     {
         return tap($this, fn (Wizard $wizard) => $wizard->context->userProfile = $userProfile);
     }
+
     public function setCookingContext(CookingContext $cooking): Wizard
     {
         return tap($this, fn (Wizard $wizard) => $wizard->context->cookingContext = $cooking);
     }
+
     public function setIngredients(IngredientEstimate $ingredients): Wizard
     {
         return tap($this, fn (Wizard $wizard) => $wizard->context->ingredients = $ingredients);
     }
+
     public function setTools(ToolEstimate $tools): Wizard
     {
         return tap($this, fn (Wizard $wizard) => $wizard->context->tools = $tools);

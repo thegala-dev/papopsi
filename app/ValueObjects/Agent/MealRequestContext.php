@@ -8,13 +8,12 @@ use App\ValueObjects\ValueObject;
 class MealRequestContext extends ValueObject
 {
     public function __construct(
-        public ?UserProfiles       $userProfile = null,
-        public ?CookingContext     $cookingContext = null,
+        public ?UserProfiles $userProfile = null,
+        public ?CookingContext $cookingContext = null,
         public ?IngredientEstimate $ingredients = null,
-        public ?ToolEstimate       $tools = null,
-        public ?LocalMetadata      $metadata = null
-    ) {
-    }
+        public ?ToolEstimate $tools = null,
+        public ?LocalMetadata $metadata = null
+    ) {}
 
     public function valid(): bool
     {
@@ -34,7 +33,7 @@ class MealRequestContext extends ValueObject
         ];
     }
 
-    static function from(array $data): MealRequestContext
+    public static function from(array $data): MealRequestContext
     {
         $userProfile = null;
         if ($data['userProfile'] ?? false) {

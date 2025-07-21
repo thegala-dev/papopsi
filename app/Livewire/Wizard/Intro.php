@@ -16,7 +16,7 @@ class Intro extends Component
 
     public function mount(): void
     {
-        if (!session()->has('requestData')) {
+        if (! session()->has('requestData')) {
             throw new \RuntimeException('RequestData not set');
         }
 

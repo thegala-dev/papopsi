@@ -2,7 +2,4 @@
 
 namespace App\ValueObjects\Agent;
 
-class IngredientEstimate
-{
-
-}
+class IngredientEstimate {}

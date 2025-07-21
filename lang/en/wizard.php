@@ -43,5 +43,5 @@ return [
         'junior' => 'sono alle prime armi in cucina, ma ci provo',
         'mid' => 'me la cavo in cucina, anche senza ricette',
         'senior' => 'in cucina mi muovo con sicurezza',
-    ]
+    ],
 ];

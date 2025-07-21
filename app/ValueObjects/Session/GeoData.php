@@ -11,8 +11,7 @@ class GeoData extends ValueObject
         public string $timezone,
         public ?string $region = null,
         public ?string $city = null,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {
@@ -24,7 +23,7 @@ class GeoData extends ValueObject
         ];
     }
 
-    static function from(array $data): GeoData
+    public static function from(array $data): GeoData
     {
         return new self(
             country: $data['country'],

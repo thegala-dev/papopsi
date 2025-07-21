@@ -38,5 +38,5 @@ return [
     'ipinfo' => [
         'token' => env('IPINFO_TOKEN'),
         'localhost_ip' => env('IPINFO_LOCALHOST_IP', '8.8.8.8'),
-    ]
+    ],
 ];

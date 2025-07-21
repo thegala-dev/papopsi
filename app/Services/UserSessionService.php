@@ -11,8 +11,7 @@ class UserSessionService implements Contracts\UserSessionService
 {
     public function __construct(
         private readonly IpInfoApi $ipApi
-    ) {
-    }
+    ) {}
 
     public function dataFromRequest(Request $request): RequestData
     {

@@ -12,8 +12,7 @@ class LocalMetadata extends ValueObject
         public string $timezone,
         public string $time,
         public MealType $mealType
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {
@@ -21,14 +20,14 @@ class LocalMetadata extends ValueObject
             'region' => $this->region,
             'timezone' => $this->timezone,
             'time' => $this->time,
-            'mealType' => $this->mealType->name
+            'mealType' => $this->mealType->name,
         ];
     }
 
-    static function from(array $data): ValueObject
+    public static function from(array $data): ValueObject
     {
         $mealType = $data['mealType'];
-        if (!$mealType instanceof MealType) {
+        if (! $mealType instanceof MealType) {
             $mealType = MealType::{$mealType};
         }
 

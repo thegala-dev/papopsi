@@ -13,9 +13,9 @@ class RedirectToStep
     {
         /** @var Wizard $wizard */
         $wizard = $request->session()->get('wizard');
-        if ($wizard === null && !$request->route()->named('wizard.intro')) {
+        if ($wizard === null && ! $request->route()->named('wizard.intro')) {
             return redirect()->route('wizard.intro');
-        } else if ($wizard !== null && !$request->route()->named($wizard->currentRoute())) {
+        } elseif ($wizard !== null && ! $request->route()->named($wizard->currentRoute())) {
             return redirect()->route($wizard->currentRoute());
         }
 

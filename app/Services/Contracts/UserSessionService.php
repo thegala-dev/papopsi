@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 interface UserSessionService
 {
     public function dataFromRequest(Request $request): RequestData;
+
     public function build(string $ip, ?string $preferredLanguage = null): RequestData;
 
     public function setSessionData(RequestData $data);

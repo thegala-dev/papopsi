@@ -16,9 +16,13 @@ use Livewire\Component;
 class StepContext extends Component
 {
     public string $zone;
+
     public string $preference;
+
     public string $time;
+
     public string $kitchen;
+
     public string $experience;
 
     public function mount()
@@ -70,6 +74,7 @@ class StepContext extends Component
     public function zoneLocalized(): string
     {
         $zone = strtolower($this->zone);
+
         return __("wizard.context.{$zone}");
     }
 
@@ -77,6 +82,7 @@ class StepContext extends Component
     public function preferenceLocalized(): string
     {
         $preference = strtolower($this->preference);
+
         return __("wizard.context.{$preference}");
     }
 
@@ -84,6 +90,7 @@ class StepContext extends Component
     public function timeLocalized(): string
     {
         $time = strtolower($this->time);
+
         return __("wizard.context.{$time}");
     }
 
@@ -91,6 +98,7 @@ class StepContext extends Component
     public function kitchenLocalized(): string
     {
         $kitchen = strtolower($this->kitchen);
+
         return __("wizard.context.{$kitchen}");
     }
 
@@ -98,6 +106,7 @@ class StepContext extends Component
     public function experienceLocalized(): string
     {
         $experience = strtolower($this->experience);
+
         return __("wizard.context.{$experience}");
     }
 

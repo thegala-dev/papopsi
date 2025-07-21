@@ -12,8 +12,7 @@ class CookingContext extends ValueObject
         public string $time,
         public string $kitchen,
         public string $experience,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

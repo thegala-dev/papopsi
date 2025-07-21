@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 class BusinessLogicProvider extends ServiceProvider
 {
     private array $services = [
-        UserSessionServiceContract::class => UserSessionService::class
+        UserSessionServiceContract::class => UserSessionService::class,
     ];
 
     public function register(): void

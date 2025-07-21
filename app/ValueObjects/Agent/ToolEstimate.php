@@ -2,7 +2,4 @@
 
 namespace App\ValueObjects\Agent;
 
-class ToolEstimate
-{
-
-}
+class ToolEstimate {}

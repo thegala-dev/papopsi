@@ -9,7 +9,7 @@ use Livewire\Wireable;
 
 abstract class ValueObject implements Arrayable, Jsonable, JsonSerializable, Wireable
 {
-    abstract static function from(array $data): self;
+    abstract public static function from(array $data): self;
 
     public function toJson($options = 0): false|string
     {
@@ -32,7 +32,7 @@ abstract class ValueObject implements Arrayable, Jsonable, JsonSerializable, Wir
             $value = json_decode($value, true);
         }
 
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             throw new \RuntimeException('Invalid value');
         }
 
