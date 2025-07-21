@@ -1,0 +1,18 @@
+{
+    "userProfile": "6-12",
+    "cookingContext": {
+        "zone": "Paese",
+        "preference": "pasti equilibrati", // Può essere anche enum, non solo stringa localizzata
+        "time": "il tempo che serve",
+        "kitchen": "equilibrata tra piccoli e grandi strumenti", // Può essere anche enum, non solo stringa localizzata
+        "experience": "me la cavo in cucina, anche senza ricette" // Può essere anche enum, non solo stringa localizzata
+    },
+    "ingredientsEstimate": [/* TODO */],
+    "toolsEstimate": [/* TODO */],
+    "metadata": {
+        "region": "Veneto",
+        "timezone": "Europe/Rome",
+        "time": "12:27",
+        "mealType": "pranzo" // Può essere anche enum, non solo stringa localizzata
+    }
+}

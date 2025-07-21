@@ -1,0 +1,47 @@
+<?php
+
+return [
+    'age' => [
+        '6-12' => '🍼 Inizia lo svezzamento',
+        '12-24' => '🦷 Primi dentini e scoperte',
+        '24-36' => '🍴 Mangia (quasi) da solo',
+        '36-60' => '🧒 Fame da bimbo grande',
+        '60-144' => '👨‍🍳 Cucina con te!',
+    ],
+    'context' => [
+        'city' => 'in una grande città',
+        'town' => 'in un paese',
+        'country' => 'in un contesto rurale',
+        'fast_meal' => 'pasti semplici e veloci',
+        'simple_meal' => 'pasti equilibrati',
+        'custom_meal' => 'pasti casalinghi e variegati',
+        'no_time' => 'poco tempo',
+        'few_time' => 'un po’ di tempo',
+        'enough_time' => 'il tempo che serve',
+        'simple_kitchen' => 'molto semplice',
+        'basic_kitchen' => 'semplice ma ben fornita',
+        'good_kitchen' => 'equilibrata tra piccoli e grandi strumenti',
+        'deluxe_kitchen' => 'ho di tutto e di più',
+        'junior' => 'sono alle prime armi in cucina, ma ci provo',
+        'mid' => 'me la cavo in cucina, anche senza ricette',
+        'senior' => 'in cucina mi muovo con sicurezza',
+    ],
+    'summary' => [
+        'city' => 'Città',
+        'town' => 'Paese',
+        'country' => 'Contesto rurale',
+        'fast_meal' => 'Pasti semplici e veloci',
+        'simple_meal' => 'Pasti equilibrati',
+        'custom_meal' => 'Pasti casalinghi e variegati',
+        'no_time' => 'Poco',
+        'few_time' => 'Abbastanza',
+        'enough_time' => 'Quello che serve',
+        'simple_kitchen' => 'Cucina basilare',
+        'basic_kitchen' => 'Cucina semplice ma ben fornita',
+        'good_kitchen' => 'Cucina equilibrata tra piccoli e grandi strumenti',
+        'deluxe_kitchen' => 'Cucina con molta attrezzatura',
+        'junior' => 'sono alle prime armi in cucina, ma ci provo',
+        'mid' => 'me la cavo in cucina, anche senza ricette',
+        'senior' => 'in cucina mi muovo con sicurezza',
+    ]
+];
