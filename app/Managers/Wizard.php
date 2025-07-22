@@ -2,15 +2,18 @@
 
 namespace App\Managers;
 
+use App\Ai\Ingredients\IngredientsAgent;
+use App\Ai\Ingredients\IngredientsOutput;
 use App\Enums\Wizard\UserProfiles;
 use App\Enums\Wizard\WizardSteps;
 use App\ValueObjects\Agent\CookingContext;
-use App\ValueObjects\Agent\IngredientEstimate;
+use App\ValueObjects\Agent\Ingredient;
 use App\ValueObjects\Agent\LocalMetadata;
 use App\ValueObjects\Agent\MealRequestContext;
-use App\ValueObjects\Agent\ToolEstimate;
+use App\ValueObjects\Agent\Tool;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Collection;
 use JsonSerializable;
 use RuntimeException;
 
@@ -85,14 +88,29 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
         return tap($this, fn (Wizard $wizard) => $wizard->context->cookingContext = $cooking);
     }
 
-    public function setIngredients(IngredientEstimate $ingredients): Wizard
+    public function setIngredients(Collection $ingredients): Wizard
     {
         return tap($this, fn (Wizard $wizard) => $wizard->context->ingredients = $ingredients);
     }
 
-    public function setTools(ToolEstimate $tools): Wizard
+    public function setTools(Collection $tools): Wizard
     {
         return tap($this, fn (Wizard $wizard) => $wizard->context->tools = $tools);
+    }
+
+    public function computeIngredients(): Wizard
+    {
+        $agent = new IngredientsAgent();
+
+        return $this->setIngredients($agent($this->context)->map(fn (IngredientsOutput $item) => Ingredient::from([
+            'label' => $item->lang[app()->getLocale()],
+            'quantity' => $item->quantity[app()->getLocale()],
+        ])));
+    }
+
+    public function computeTools(): Wizard
+    {
+        return $this;
     }
 
     public function toArray(): array

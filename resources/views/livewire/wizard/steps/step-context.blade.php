@@ -35,7 +35,11 @@
         <form wire:submit="nextStep">
             @csrf
             <button type="submit" class="mt-8 w-full bg-papopsi-primary/40 text-white font-semibold py-3 px-6 rounded-lg hover:bg-papopsi-primary transition">
-                Continua
+                <div class="flex justify-center">
+                    <flux:icon.loading class="mr-2" wire:loading />
+                    <span wire:loading>Papopsi sta scegliendo gli ingredienti e gli accessori</span>
+                    <span wire:loading.remove>Continua</span>
+                </div>
             </button>
         </form>
 

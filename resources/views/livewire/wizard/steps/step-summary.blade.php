@@ -1,3 +1,4 @@
+@php /** @var \App\Managers\Wizard $wizard */ @endphp
 <div class="max-w-2xl mx-auto px-4 py-12 space-y-8">
     <div class="wizard-card">
         <h1 class="text-3xl font-bold mb-4 text-papopsi-primary">Rivediamo insieme</h1>
@@ -10,7 +11,7 @@
             <li>🌟 Cucina: <strong>{{ __("wizard.summary.{$wizard->context->cookingContext->kitchen}") }}</strong></li>
             <li>⏱️ Tempo: <strong>{{ __("wizard.summary.{$wizard->context->cookingContext->time}") }}</strong></li>
             <li>🧑‍🍳 Esperienza: <strong>{{ __("wizard.summary.{$wizard->context->cookingContext->experience}") }}</strong></li>
-            <li>📋 Ingredienti: <strong>TODO</strong></li>
+            <li>📋 Ingredienti: <strong>{{ $wizard->context->ingredients->implode('label', ', ') }}</strong></li>
             <li>📋 Accessori: <strong>TODO</strong></li>
         </ul>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">

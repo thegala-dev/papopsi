@@ -25,7 +25,7 @@ class StepContext extends Component
 
     public string $experience;
 
-    public function mount()
+    public function mount(): void
     {
         $this->zone = strtolower(Arr::random(Zones::cases())->name);
         $this->preference = strtolower(Arr::random(Preferences::cases())->name);
@@ -114,15 +114,14 @@ class StepContext extends Component
     {
         /** @var Wizard $wizard */
         $wizard = session()->get('wizard');
+        $nextStep = $wizard->setCookingContext(CookingContext::from([
+            'zone' => $this->zone,
+            'preference' => $this->preference,
+            'time' => $this->time,
+            'kitchen' => $this->kitchen,
+            'experience' => $this->experience,
+        ]))->computeIngredients()->computeTools()->save()->nextStep();
 
-        $this->redirect(
-            $wizard->setCookingContext(CookingContext::from([
-                'zone' => $this->zone,
-                'preference' => $this->preference,
-                'time' => $this->time,
-                'kitchen' => $this->kitchen,
-                'experience' => $this->experience,
-            ]))->save()->nextStep()
-        );
+        $this->redirect($nextStep);
     }
 }

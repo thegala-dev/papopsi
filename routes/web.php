@@ -12,6 +12,11 @@ use App\Livewire\Wizard\Steps\StepSummary;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
+Route::get('/invalidate', function () {
+    session()->invalidate();
+
+    return redirect()->to('/');
+})->name('home');
 
 Route::prefix('wizard')
     ->middleware(RedirectToStep::class)

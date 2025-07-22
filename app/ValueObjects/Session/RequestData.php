@@ -25,12 +25,12 @@ class RequestData extends ValueObject
         ];
     }
 
-    public static function from(array $value): static
+    public static function from(array $data): static
     {
         return new self(
-            geoData: GeoData::from($value['geoData']),
-            language: $value['language'],
-            time: Carbon::createFromFormat('Y-m-d H:i:s', $value['time'] ?? null)
+            geoData: $geoData = GeoData::from($data['geoData']),
+            language: $data['language'],
+            time: Carbon::createFromFormat('Y-m-d H:i:s', $data['time'] ?? null, $geoData->timezone)
         );
     }
 
