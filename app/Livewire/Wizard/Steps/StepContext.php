@@ -27,11 +27,23 @@ class StepContext extends Component
 
     public function mount(): void
     {
-        $this->zone = strtolower(Arr::random(Zones::cases())->name);
-        $this->preference = strtolower(Arr::random(Preferences::cases())->name);
-        $this->time = strtolower(Arr::random(Times::cases())->name);
-        $this->kitchen = strtolower(Arr::random(Kitchens::cases())->name);
-        $this->experience = strtolower(Arr::random(Experiences::cases())->name);
+        $wizard = Wizard::instance();
+
+        if ($wizard->context->cookingContext === null) {
+            $wizard->setCookingContext(CookingContext::from([
+                'zone' => strtolower(Arr::random(Zones::cases())->name),
+                'preference' => strtolower(Arr::random(Preferences::cases())->name),
+                'time' => strtolower(Arr::random(Times::cases())->name),
+                'kitchen' => strtolower(Arr::random(Kitchens::cases())->name),
+                'experience' => strtolower(Arr::random(Experiences::cases())->name),
+            ]))->save();
+        }
+
+        $this->zone = $wizard->context->cookingContext->zone;
+        $this->preference = $wizard->context->cookingContext->preference;
+        $this->time = $wizard->context->cookingContext->time;
+        $this->kitchen = $wizard->context->cookingContext->kitchen;
+        $this->experience = $wizard->context->cookingContext->experience;
     }
 
     public function render()
@@ -112,16 +124,14 @@ class StepContext extends Component
 
     public function nextStep(): void
     {
-        /** @var Wizard $wizard */
-        $wizard = session()->get('wizard');
-        $nextStep = $wizard->setCookingContext(CookingContext::from([
-            'zone' => $this->zone,
-            'preference' => $this->preference,
-            'time' => $this->time,
-            'kitchen' => $this->kitchen,
-            'experience' => $this->experience,
-        ]))->computeIngredients()->computeTools()->save()->nextStep();
-
-        $this->redirect($nextStep);
+        $this->redirect(
+            Wizard::instance()->setCookingContext(CookingContext::from([
+                'zone' => strtolower($this->zone),
+                'preference' => strtolower($this->preference),
+                'time' => strtolower($this->time),
+                'kitchen' => strtolower($this->kitchen),
+                'experience' => strtolower($this->experience),
+            ]))->computeIngredients()->computeTools()->nextStep()
+        );
     }
 }

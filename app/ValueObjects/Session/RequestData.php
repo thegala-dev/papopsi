@@ -37,7 +37,7 @@ class RequestData extends ValueObject
     public function toLocalMetadata(): LocalMetadata
     {
         return new LocalMetadata(
-            region: $this->geoData->region,
+            region: $this->geoData->region ?? $this->geoData->country,
             timezone: $this->geoData->timezone,
             time: $this->time->format('H:i'),
             mealType: $this->mealType()

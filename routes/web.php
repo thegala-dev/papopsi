@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Middleware\CheckRecipeLimit;
 use App\Http\Middleware\GenerateSessionData;
 use App\Http\Middleware\RedirectToStep;
 use App\Livewire\Pages\Home;
-use App\Livewire\Pages\Recipe;
+use App\Livewire\Support\RecipeLimit;
 use App\Livewire\Wizard\Intro;
+use App\Livewire\Wizard\Recipe;
 use App\Livewire\Wizard\Steps\StepAge;
 use App\Livewire\Wizard\Steps\StepContext;
 use App\Livewire\Wizard\Steps\StepDetails;
@@ -16,34 +18,41 @@ Route::get('/invalidate', function () {
     session()->invalidate();
 
     return redirect()->to('/');
-})->name('home');
+})->name('invalidate');
 
 Route::prefix('wizard')
-    ->middleware(RedirectToStep::class)
     ->name('wizard.')
     ->group(function () {
-        Route::get('/', Intro::class)
-            ->middleware(GenerateSessionData::class)
-            ->name('intro');
-
-        Route::prefix('steps')
-            ->name('steps.')
+        Route::middleware([RedirectToStep::class, CheckRecipeLimit::class])
             ->group(function () {
-                Route::get('/age', StepAge::class)
-                    ->name('age');
-                Route::get('/context', StepContext::class)
-                    ->name('context');
-                Route::get('/summary', StepSummary::class)
-                    ->name('summary');
-                Route::get('/details', StepDetails::class)
-                    ->name('details');
+                Route::get('/', Intro::class)
+                    ->middleware(GenerateSessionData::class)
+                    ->name('intro');
+
+                Route::prefix('steps')
+                    ->name('steps.')
+                    ->group(function () {
+                        Route::get('/age', StepAge::class)
+                            ->name('age');
+                        Route::get('/context', StepContext::class)
+                            ->name('context');
+                        Route::get('/summary', StepSummary::class)
+                            ->name('summary');
+                        Route::get('/details', StepDetails::class)
+                            ->name('details');
+                    });
             });
 
-        Route::get('/recipe', Recipe::class)
-            ->name('recipe');
+        Route::prefix('recipe')
+            ->name('recipe.')
+            ->group(function () {
+                Route::get('/', Recipe::class)
+                    ->name('index');
 
+                Route::get('/limit-reached', RecipeLimit::class)
+                    ->name('limit-reached');
+            });
     });
-
 // Route::view('dashboard', 'dashboard')
 //    ->middleware(['auth', 'verified'])
 //    ->name('dashboard');

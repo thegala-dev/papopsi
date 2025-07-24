@@ -16,11 +16,8 @@ class StepAge extends Component
 
     public function nextStep(UserProfiles $userProfile): void
     {
-        /** @var Wizard $wizard */
-        $wizard = session()->get('wizard');
-
         $this->redirect(
-            $wizard->setUserProfile($userProfile)->save()->nextStep()
+            Wizard::instance()->setUserProfile($userProfile)->nextStep()
         );
     }
 }

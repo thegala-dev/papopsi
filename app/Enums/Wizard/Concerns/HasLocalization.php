@@ -11,7 +11,7 @@ trait HasLocalization
         return Arr::mapWithKeys(self::cases(), function (self $item) {
             $name = strtolower($item->name);
 
-            return [$item->name => __("wizard.context.{$name}")];
+            return [$name => __("wizard.context.{$name}")];
         });
     }
 }

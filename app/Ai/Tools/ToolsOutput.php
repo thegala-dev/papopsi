@@ -2,42 +2,40 @@
 
 namespace App\Ai\Tools;
 
-use App\ValueObjects\Agent\Ingredient;
-use App\ValueObjects\Agent\RecipeStep;
+use App\Ai\Contracts\AgentOutput;
 use App\ValueObjects\Agent\Tool;
 use App\ValueObjects\ValueObject;
 use Illuminate\Support\Collection;
+use NeuronAI\StructuredOutput\SchemaProperty;
+use NeuronAI\StructuredOutput\Validation\Rules\ArrayOf;
 
-class ToolsOutput extends ValueObject
+class ToolsOutput extends ValueObject implements AgentOutput
 {
-    /**
-     * @param  Collection<Ingredient>  $ingredients
-     * @param  Collection<Tool>  $tools
-     * @param  Collection<RecipeStep>  $steps
-     */
     public function __construct(
-        public string $title,
-        public string $description,
-        public string $totalTime,
-        public Collection $ingredients,
-        public Collection $tools,
-        public Collection $steps,
+        /**
+         * @var \App\ValueObjects\Agent\Tool[]
+         */
+        #[SchemaProperty(description: 'List of kitchen tools used in the recipe, localized and optionally marked as optional', required: true)]
+        #[ArrayOf(Tool::class)]
+        public array $tools
     ) {}
 
     public function toArray(): array
     {
-        return [];
+        return [
+            'tools' => array_map(fn (Tool $tool) => $tool->toArray(), $this->tools),
+        ];
     }
 
     public static function from(array $data): ToolsOutput
     {
         return new self(
-            title: $data['title'],
-            description: $data['description'],
-            totalTime: $data['totalTime'],
-            ingredients: collect($data['ingredients'])->map(fn (array $item) => Ingredient::from($item)),
-            tools: collect($data['tools'])->map(fn (array $item) => Tool::from($item)),
-            steps: collect($data['steps'])->map(fn (array $item) => RecipeStep::from($item)),
+            tools: array_map(fn (array $item) => Tool::from($item), $data),
         );
+    }
+
+    public function getTools(): Collection
+    {
+        return collect($this->tools);
     }
 }

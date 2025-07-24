@@ -10,7 +10,7 @@
         </p>
         <button
             wire:click="redirectToWizard"
-            class="mt-10 btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition"
+            class="mt-10 btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition cursor-pointer"
         >
             Prepara la pappa
         </button>
@@ -69,7 +69,7 @@
     <section class="py-12 text-center px-6">
         <button
             wire:click="redirectToWizard"
-            class="btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition"
+            class="btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition cursor-pointer"
         >
             Prepara la pappa
         </button>
@@ -122,7 +122,7 @@
                     placeholder="La tua email"
                     class="flex-1 px-4 py-3 rounded-lg border border-papopsi-muted focus:outline-none focus:ring-2 focus:ring-papopsi-primary"
                 >
-                <button type="submit" class="btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition">
+                <button type="submit" class="btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition cursor-pointer">
                     Iscriviti
                 </button>
             </form>

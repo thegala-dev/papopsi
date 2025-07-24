@@ -9,21 +9,31 @@ class IpInfoApi
 {
     const DEFAULT_COUNTRY = 'Italy';
 
-    public function retrieveIpData(string $ip): GeoData
+    public function cachedIpData(string $ip): GeoData
     {
-        return cache()->remember($ip, now()->addMinutes(30), function () use ($ip) {
-            $response = Http::get("https://ipinfo.io/{$ip}/json", [
-                'token' => config('services.ipinfo.token'),
-            ]);
+        return cache()->remember(
+            key: "info-$ip",
+            ttl: now()->addDay(),
+            callback: fn () => $this->getIpData($ip)
+        );
+    }
 
-            if ($response->successful()) {
-                return GeoData::from($response->json());
-            }
+    private function getIpData(string $ip): GeoData
+    {
+        $response = Http::get(
+            url: "https://ipinfo.io/{$ip}/json",
+            query: ['token' => config('services.ipinfo.token')]
+        );
 
-            return new GeoData(
-                country: self::DEFAULT_COUNTRY,
-                timezone: config('app.timezone'),
+        if ($response->successful()) {
+            return GeoData::from(
+                data: $response->json()
             );
-        });
+        }
+
+        return new GeoData(
+            country: self::DEFAULT_COUNTRY,
+            timezone: config('app.timezone'),
+        );
     }
 }

@@ -11,11 +11,21 @@ class RedirectToStep
 {
     public function handle(Request $request, Closure $next): Response
     {
+        if ($request->route()->named('wizard.recipe.limit-reached')) {
+            return $next($request);
+        }
+
+        if (! $request->session()->has('wizard')) {
+            if (! $request->routeIs('wizard.intro')) {
+                return redirect()->route('wizard.intro');
+            }
+
+            return $next($request);
+        }
+
         /** @var Wizard $wizard */
         $wizard = $request->session()->get('wizard');
-        if ($wizard === null && ! $request->route()->named('wizard.intro')) {
-            return redirect()->route('wizard.intro');
-        } elseif ($wizard !== null && ! $request->route()->named($wizard->currentRoute())) {
+        if (! $request->route()->named($wizard->currentRoute())) {
             return redirect()->route($wizard->currentRoute());
         }
 

@@ -3,13 +3,15 @@
 namespace App\Livewire\Wizard;
 
 use App\Enums\Wizard\MealType;
+use App\Livewire\Wizard\Concerns\WithComputedMeal;
 use App\Managers\Wizard;
 use App\ValueObjects\Session\RequestData;
-use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Intro extends Component
 {
+    use WithComputedMeal;
+
     public RequestData $requestData;
 
     public bool $consent = false;
@@ -29,16 +31,9 @@ class Intro extends Component
             ->title('Prepariamo la pappa!');
     }
 
-    #[Computed]
-    public function meal(): string
+    public function getMealType(): MealType
     {
-        return match ($this->requestData->mealType()) {
-            MealType::BREAKFAST => 'la colazione',
-            MealType::MORNING_SNACK => 'lo spuntino',
-            MealType::LUNCH => 'il pranzo',
-            MealType::AFTERNOON_SNACK => 'la merenda',
-            MealType::DINNER => 'la cena',
-        };
+        return $this->requestData->mealType();
     }
 
     public function startWizard(): void
@@ -46,7 +41,7 @@ class Intro extends Component
         $wizard = Wizard::start();
 
         $this->redirect(
-            $wizard->setLocalMetadata($this->requestData->toLocalMetadata())->save()->nextStep()
+            $wizard->setLocalMetadata($this->requestData->toLocalMetadata())->nextStep()
         );
     }
 }

@@ -64,8 +64,5 @@ class MealRequestContext extends ValueObject
         );
     }
 
-    public function toPromptData(): array
-    {
-
-    }
+    public function toPromptData(): array {}
 }

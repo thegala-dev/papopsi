@@ -27,7 +27,7 @@ class UserSessionService implements Contracts\UserSessionService
         $lang = $preferredLanguage ?: config('app.locale');
 
         return new RequestData(
-            geoData: $geoData = $this->ipApi->retrieveIpData($ip),
+            geoData: $geoData = $this->ipApi->cachedIpData($ip),
             language: $lang,
             time: Carbon::now($geoData->timezone)
         );
@@ -43,10 +43,7 @@ class UserSessionService implements Contracts\UserSessionService
     {
         $localIps = ['127.0.0.1', '::1', 'localhost'];
 
-        if (empty($ip)
-            || in_array($ip, $localIps, true)
-            || ! filter_var($ip, FILTER_VALIDATE_IP)
-        ) {
+        if (empty($ip) || in_array($ip, $localIps, true) || ! filter_var($ip, FILTER_VALIDATE_IP)) {
             return config('services.ipinfo.localhost_ip', '8.8.8.8');
         }
 

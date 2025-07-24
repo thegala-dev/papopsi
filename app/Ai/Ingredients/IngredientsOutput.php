@@ -2,29 +2,40 @@
 
 namespace App\Ai\Ingredients;
 
+use App\Ai\Contracts\AgentOutput;
+use App\ValueObjects\Agent\Ingredient;
 use App\ValueObjects\ValueObject;
 use Illuminate\Support\Collection;
+use NeuronAI\StructuredOutput\SchemaProperty;
+use NeuronAI\StructuredOutput\Validation\Rules\ArrayOf;
 
-class IngredientsOutput extends ValueObject
+class IngredientsOutput extends ValueObject implements AgentOutput
 {
     public function __construct(
-        public Collection $lang,
-        public Collection $quantity,
+        /**
+         * @var \App\ValueObjects\Agent\Ingredient[]
+         */
+        #[SchemaProperty(description: 'List of ingredients for the recipe, including label and quantity, localized in the user language', required: true)]
+        #[ArrayOf(Ingredient::class)]
+        public array $ingredients
     ) {}
 
     public function toArray(): array
     {
         return [
-            'lang' => $this->lang->toArray(),
-            'quantity' => $this->quantity,
+            'ingredients' => array_map(fn (Ingredient $ingredient) => $ingredient->toArray(), $this->ingredients),
         ];
     }
 
     public static function from(array $data): IngredientsOutput
     {
         return new self(
-            lang: collect($data['lang']),
-            quantity: collect($data['quantity']),
+            ingredients: array_map(fn (array $item) => Ingredient::from($item), $data),
         );
+    }
+
+    public function getIngredients(): Collection
+    {
+        return collect($this->ingredients);
     }
 }

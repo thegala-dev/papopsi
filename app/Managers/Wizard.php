@@ -4,18 +4,22 @@ namespace App\Managers;
 
 use App\Ai\Ingredients\IngredientsAgent;
 use App\Ai\Ingredients\IngredientsOutput;
+use App\Ai\Ingredients\IngredientsPromptBuilder;
+use App\Ai\Recipes\RecipeAgent;
+use App\Ai\Recipes\RecipeOutput;
+use App\Ai\Recipes\RecipePromptBuilder;
+use App\Ai\Tools\ToolsAgent;
+use App\Ai\Tools\ToolsOutput;
+use App\Ai\Tools\ToolsPromptBuilder;
 use App\Enums\Wizard\UserProfiles;
 use App\Enums\Wizard\WizardSteps;
 use App\ValueObjects\Agent\CookingContext;
-use App\ValueObjects\Agent\Ingredient;
 use App\ValueObjects\Agent\LocalMetadata;
 use App\ValueObjects\Agent\MealRequestContext;
-use App\ValueObjects\Agent\Tool;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use JsonSerializable;
-use RuntimeException;
 
 class Wizard implements Arrayable, Jsonable, JsonSerializable
 {
@@ -23,6 +27,15 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
         public WizardSteps $step,
         public MealRequestContext $context
     ) {}
+
+    public static function instance(): Wizard
+    {
+        if (session()->has('wizard')) {
+            return session()->get('wizard');
+        }
+
+        return self::start();
+    }
 
     public static function start(): Wizard
     {
@@ -39,27 +52,34 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
 
     public function nextStep(): string
     {
+        $route = null;
         switch ($this->step) {
             case WizardSteps::INTRO:
                 $this->step = WizardSteps::AGE;
 
-                return route('wizard.steps.age');
+                $route = route('wizard.steps.age');
+                break;
             case WizardSteps::AGE:
                 $this->step = WizardSteps::CONTEXT;
 
-                return route('wizard.steps.context');
+                $route = route('wizard.steps.context');
+                break;
             case WizardSteps::CONTEXT:
             case WizardSteps::DETAILS:
                 $this->step = WizardSteps::SUMMARY;
 
-                return route('wizard.steps.summary');
+                $route = route('wizard.steps.summary');
+                break;
             case WizardSteps::SUMMARY:
                 $this->step = WizardSteps::DETAILS;
 
-                return route('wizard.steps.details');
+                $route = route('wizard.steps.details');
+                break;
         }
 
-        throw new RuntimeException('Invalid step');
+        $this->save();
+
+        return $route;
     }
 
     public function currentRoute(): string
@@ -100,17 +120,27 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
 
     public function computeIngredients(): Wizard
     {
-        $agent = new IngredientsAgent();
+        $agent = app()->make(IngredientsAgent::class);
+        /** @var IngredientsOutput $response */
+        $response = $agent->execute(new IngredientsPromptBuilder($this->context));
 
-        return $this->setIngredients($agent($this->context)->map(fn (IngredientsOutput $item) => Ingredient::from([
-            'label' => $item->lang[app()->getLocale()],
-            'quantity' => $item->quantity[app()->getLocale()],
-        ])));
+        return $this->setIngredients(collect($response->ingredients));
     }
 
     public function computeTools(): Wizard
     {
-        return $this;
+        $agent = app()->make(ToolsAgent::class);
+        /** @var ToolsOutput $response */
+        $response = $agent->execute(new ToolsPromptBuilder($this->context));
+
+        return $this->setTools(collect($response->tools));
+    }
+
+    public function finalize(): RecipeOutput
+    {
+        $agent = app()->make(RecipeAgent::class);
+
+        return $agent->execute(new RecipePromptBuilder($this->context));
     }
 
     public function toArray(): array

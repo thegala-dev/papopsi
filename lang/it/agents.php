@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'languages' => [
+        'en' => 'English',
+        'it' => 'Italiano',
+    ],
     'zone' => [
         'city' => 'in una grande città',
         'town' => 'in un paese',

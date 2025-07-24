@@ -34,11 +34,11 @@
 
         <form wire:submit="nextStep">
             @csrf
-            <button type="submit" class="mt-8 w-full bg-papopsi-primary/40 text-white font-semibold py-3 px-6 rounded-lg hover:bg-papopsi-primary transition">
+            <button type="submit" class="mt-8 w-full bg-white text-papopsi-primary border border-papopsi-primary font-semibold py-3 px-6 rounded-lg hover:bg-papopsi-primary hover:text-white transition">
                 <div class="flex justify-center">
-                    <flux:icon.loading class="mr-2" wire:loading />
-                    <span wire:loading>Papopsi sta scegliendo gli ingredienti e gli accessori</span>
-                    <span wire:loading.remove>Continua</span>
+                    <flux:icon.loading class="mr-2" wire:loading wire:target="nextStep" />
+                    <span wire:loading wire:target="nextStep">Papopsi sta scegliendo gli ingredienti e gli accessori</span>
+                    <span wire:loading.remove wire:target="nextStep">Continua</span>
                 </div>
             </button>
         </form>

@@ -2,42 +2,73 @@
 
 namespace App\Ai\Recipes;
 
+use App\Ai\Contracts\AgentOutput;
 use App\ValueObjects\Agent\Ingredient;
 use App\ValueObjects\Agent\RecipeStep;
 use App\ValueObjects\Agent\Tool;
 use App\ValueObjects\ValueObject;
-use Illuminate\Support\Collection;
+use NeuronAI\StructuredOutput\SchemaProperty;
+use NeuronAI\StructuredOutput\Validation\Rules\ArrayOf;
+use NeuronAI\StructuredOutput\Validation\Rules\NotBlank;
 
-class RecipeOutput extends ValueObject
+class RecipeOutput extends ValueObject implements AgentOutput
 {
-    /**
-     * @param  Collection<Ingredient>  $ingredients
-     * @param  Collection<Tool>  $tools
-     * @param  Collection<RecipeStep>  $steps
-     */
     public function __construct(
+        #[SchemaProperty(description: 'The recipe title', required: true)]
+        #[NotBlank]
         public string $title,
+
+        #[SchemaProperty(description: 'The recipe title converted into a URL-friendly slug (lowercase, hyphenated)', required: true)]
+        #[NotBlank]
+        public string $slug,
+
+        #[SchemaProperty(description: 'A short nutritional and contextual description of the recipe, written for parents', required: true)]
+        #[NotBlank]
         public string $description,
+
+        #[SchemaProperty(description: 'Total estimated time to prepare the recipe in plain text, e.g. "30 minutes"', required: true)]
+        #[NotBlank]
         public string $totalTime,
-        public Collection $ingredients,
-        public Collection $tools,
-        public Collection $steps,
+
+        /** @var \App\ValueObjects\Agent\Ingredient[] */
+        #[SchemaProperty(description: 'The ingredients list for the recipe', required: true)]
+        #[ArrayOf(Ingredient::class)]
+        public array $ingredients,
+
+        /** @var \App\ValueObjects\Agent\Tool[] */
+        #[SchemaProperty(description: 'The tools list for the recipe', required: true)]
+        #[ArrayOf(Tool::class)]
+        public array $tools,
+
+        /** @var \App\ValueObjects\Agent\RecipeStep[] */
+        #[SchemaProperty(description: 'The recipe steps list', required: true)]
+        #[ArrayOf(RecipeStep::class)]
+        public array $steps,
     ) {}
 
     public function toArray(): array
     {
-        return [];
+        return [
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'description' => $this->description,
+            'totalTime' => $this->totalTime,
+            'ingredients' => collect($this->ingredients)->toArray(),
+            'tools' => collect($this->tools)->toArray(),
+            'steps' => collect($this->steps)->toArray(),
+        ];
     }
 
     public static function from(array $data): RecipeOutput
     {
         return new self(
             title: $data['title'],
+            slug: $data['slug'],
             description: $data['description'],
             totalTime: $data['totalTime'],
-            ingredients: collect($data['ingredients'])->map(fn (array $item) => Ingredient::from($item)),
-            tools: collect($data['tools'])->map(fn (array $item) => Tool::from($item)),
-            steps: collect($data['steps'])->map(fn (array $item) => RecipeStep::from($item)),
+            ingredients: array_map(fn (array $item) => Ingredient::from($item), $data['ingredients']),
+            tools: array_map(fn (array $item) => Tool::from($item), $data['tools']),
+            steps: array_map(fn (array $item) => RecipeStep::from($item), $data['steps']),
         );
     }
 }

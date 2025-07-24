@@ -11,10 +11,12 @@ class GenerateSessionData
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $userSessionService = app(UserSessionService::class);
-        $userSessionService->setSessionData(
-            $userSessionService->datafromRequest($request)
-        );
+        if (! $request->session()->has('wizard')) {
+            $userSessionService = app(UserSessionService::class);
+            $userSessionService->setSessionData(
+                $userSessionService->datafromRequest($request)
+            );
+        }
 
         return $next($request);
     }

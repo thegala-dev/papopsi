@@ -48,7 +48,7 @@
             <button type="submit"
                     @class([
                         "w-full bg-papopsi-primary/40 text-white font-semibold py-3 px-6 rounded-lg transition",
-                        "bg-papopsi-primary/90 hover:bg-papopsi-primary" => $consent,
+                        "bg-papopsi-primary/90 hover:bg-papopsi-primary cursor-pointer" => $consent,
                     ])
                     @disabled(!$consent)
             >

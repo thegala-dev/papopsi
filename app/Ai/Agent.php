@@ -1,35 +1,35 @@
 <?php
 
-namespace App\Ai\Tools;
+namespace App\Ai;
 
-use App\Ai\Agent;
+use App\Ai\Contracts\AgentOutput;
 use App\Ai\Contracts\PromptBuilder;
 use Illuminate\Support\Facades\Log;
+use NeuronAI\Agent as NeuronAgent;
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Exceptions\NeuronException;
 use NeuronAI\Exceptions\ProviderException;
 use NeuronAI\Providers\AIProviderInterface;
 
-class ToolsAgent extends Agent
+abstract class Agent extends NeuronAgent
 {
-    protected function provider(): AIProviderInterface
-    {
-        return $this->provider;
-    }
+    public function __construct(
+        protected AIProviderInterface $provider,
+    ) {}
 
-    protected function getOutputClass(): string
-    {
-        return ToolsOutput::class;
-    }
-
-    public function execute(PromptBuilder $builder): ?ToolsOutput
+    public function execute(PromptBuilder $builder): ?AgentOutput
     {
         try {
-            return $this->withInstructions(
+            /** @var AgentOutput $response */
+            $response = $this->withInstructions(
                 $builder->getSystemPrompt()
             )->structured(
                 new UserMessage($builder->getPrompt())
             );
+
+            Log::debug('Agent response', $response->toArray());
+
+            return $response;
         } catch (NeuronException $e) {
             Log::error($e->getMessage(), [
                 'system_prompt' => $builder->getSystemPrompt(),
