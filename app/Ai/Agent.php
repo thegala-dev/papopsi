@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use NeuronAI\Agent as NeuronAgent;
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Exceptions\NeuronException;
-use NeuronAI\Exceptions\ProviderException;
 use NeuronAI\Providers\AIProviderInterface;
 
 abstract class Agent extends NeuronAgent
@@ -17,6 +16,9 @@ abstract class Agent extends NeuronAgent
         protected AIProviderInterface $provider,
     ) {}
 
+    /**
+     * @throws NeuronException
+     */
     public function execute(PromptBuilder $builder): ?AgentOutput
     {
         try {
@@ -36,14 +38,7 @@ abstract class Agent extends NeuronAgent
                 'prompt' => $builder->getPrompt(),
             ]);
 
-            return null;
-        } catch (ProviderException $e) {
-            Log::error($e->getMessage(), [
-                'system_prompt' => $builder->getSystemPrompt(),
-                'prompt' => $builder->getPrompt(),
-            ]);
-
-            return null;
+            throw $e;
         }
     }
 }

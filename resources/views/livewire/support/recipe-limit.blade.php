@@ -1,31 +1,35 @@
 <div class="max-w-2xl mx-auto px-4 py-8 space-y-10">
-    <div class="wizard-card space-y-8">
+    <div class="border border-papopsi-secondary p-6 rounded-2xl shadow space-y-10">
+
+        <!-- start: limit reached notice -->
         <div class="space-y-4">
-            <h1 class="text-3xl sm:text-4xl font-bold text-papopsi-primary">Stop, cucchiaino esaurito!</h1>
-            <p class="mt-4 text-base sm:text-lg text-gray-700">
+            <h1 class="text-3xl sm:text-4xl font-bold text-papopsi-brand">Stop, cucchiaino esaurito!</h1>
+            <p class="text-base sm:text-lg text-papopsi-muted">
                 Hai già generato <strong>3 pappe oggi</strong>. Per garantire a tutti un’esperienza leggera e gratuita, impostiamo un piccolo limite giornaliero.
             </p>
         </div>
+        <!-- end: limit reached notice -->
 
-        <div class="text-left">
-            <h2 class="text-lg font-semibold mb-4">Le tue ultime pappe</h2>
+        <!-- start: latest recipes -->
+        <div class="text-left space-y-4">
+            <h2 class="text-lg font-semibold">Le tue ultime pappe</h2>
             <div class="space-y-4">
                 @foreach($this->recipes as $recipe)
                     @php /** @var \App\Ai\Recipes\RecipeOutput $recipe */ @endphp
-                    <div class="bg-white p-5 rounded-xl shadow flex flex-col gap-2">
+                    <div class="bg-white p-5 rounded-xl shadow space-y-2">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-semibold text-papopsi-primary">{{ $recipe->title }}</h3>
-                            <span class="inline-block bg-papopsi-muted text-xs font-medium text-gray-700 px-2 py-1 rounded-full">
+                            <h3 class="text-lg font-semibold text-papopsi-brand">{{ $recipe->title }}</h3>
+                            <span class="inline-block bg-papopsi-highlight-100 text-xs font-medium text-papopsi-highlight px-2 py-1 rounded-full">
                                 {{ $recipe->duration ?? 'circa 15 min' }}
                             </span>
                         </div>
-                        <p class="text-sm text-gray-700">
+                        <p class="text-sm text-papopsi-muted">
                             {{ $recipe->description ?? 'Una pappa pensata su misura per il tuo bimbo, equilibrata e semplice da preparare.' }}
                         </p>
                         <div>
                             <a
                                 href="{{ route('wizard.recipe.index', ['recipe' => $recipe->slug]) }}"
-                                class="text-sm text-papopsi-primary underline hover:no-underline font-medium"
+                                class="text-sm text-papopsi-brand underline hover:no-underline font-medium"
                             >
                                 Visualizza
                             </a>
@@ -34,9 +38,11 @@
                 @endforeach
             </div>
         </div>
+        <!-- end: latest recipes -->
 
-        <div class="text-center">
-            <h2 class="text-xl font-semibold mb-4">Prossimo cucchiaino disponibile tra</h2>
+        <!-- start: countdown -->
+        <div class="text-center space-y-4">
+            <h2 class="text-xl font-semibold">Prossimo cucchiaino disponibile tra</h2>
             <div
                 x-data="{
                     seconds: @entangle('remainingSeconds'),
@@ -48,31 +54,36 @@
                     }
                 }"
                 x-init="setInterval(() => { if (seconds > 0) seconds--; }, 1000)"
-                class="bg-papopsi-muted text-papopsi-primary font-mono text-4xl py-6 rounded-lg"
+                class="bg-white text-papopsi-brand font-mono text-4xl py-6 rounded-lg shadow"
             >
                 <span x-text="formatted()"></span>
             </div>
         </div>
+        <!-- end: countdown -->
 
-        <div class="text-center text-gray-700">
+        <!-- start: support section -->
+        <div class="text-center text-papopsi-muted space-y-6">
             <p class="text-base sm:text-lg">
-                Dietro Papopsi c’è un progetto indipendente, gratuito e pensato per tutti.<br class="hidden sm:inline"> Se vuoi darci una mano a farlo crescere, ecco come puoi aiutarci:
+                Dietro Papopsi c'è un progetto indipendente, gratuito e pensato per tutti.<br class="hidden sm:inline">
+                Se vuoi darci una mano a farlo crescere, ecco come puoi aiutarci:
             </p>
-            <div class="mt-6 flex flex-col sm:flex-row justify-center gap-4">
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a
                     href="https://coff.ee/thegaladev"
                     target="_blank"
-                    class="btn-pill bg-papopsi-muted text-papopsi-primary hover:bg-papopsi-muted/90 transition"
+                    class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-papopsi-highlight-100 text-papopsi-highlight text-sm font-semibold hover:bg-papopsi-highlight-200 transition"
                 >
-                    Dona un cucchiaino 🍴
+                    <i data-lucide="coffee"></i> Dona un cucchiaino
                 </a>
                 <a
                     href="mailto:ciao@papopsi.it"
-                    class="btn-pill border border-papopsi-muted text-papopsi-text hover:bg-papopsi-muted/50 transition"
+                    class="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-papopsi-muted text-papopsi-muted text-sm font-semibold hover:bg-papopsi-muted/50 transition"
                 >
-                    Scrivici
+                    <i data-lucide="mail"></i> Scrivici
                 </a>
             </div>
         </div>
+        <!-- end: support section -->
+
     </div>
 </div>

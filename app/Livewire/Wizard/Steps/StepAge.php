@@ -11,7 +11,12 @@ class StepAge extends Component
     public function render()
     {
         return view('livewire.wizard.steps.step-age')
-            ->title('Quanti anni ha il tuo bambino?');
+            ->layoutData([
+                'description' => __('seo.wizard_age.description'),
+                'keywords' => __('seo.wizard_age.keywords'),
+                'ogTitle' => __('seo.wizard_age.og_title'),
+                'ogDescription' => __('seo.wizard_age.og_description'),
+            ])->title(__('seo.wizard_age.title'));
     }
 
     public function nextStep(UserProfiles $userProfile): void

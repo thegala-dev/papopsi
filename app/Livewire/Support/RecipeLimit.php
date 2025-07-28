@@ -15,13 +15,18 @@ class RecipeLimit extends Component
     public function mount()
     {
         $manager = new Recipe(request());
-        $this->remainingSeconds = $manager->getTtl()->secondsSinceMidnight();
+        $this->remainingSeconds = now()->diffInSeconds($manager->getTtl());
         $this->recipes = $manager->recipes;
     }
 
     public function render()
     {
         return view('livewire.support.recipe-limit')
-            ->title('Hai esaurito le pappe per oggi!');
+            ->layoutData([
+                'description' => __('seo.recipe_limit.description'),
+                'keywords' => __('seo.recipe_limit.keywords'),
+                'ogTitle' => __('seo.recipe_limit.og_title'),
+                'ogDescription' => __('seo.recipe_limit.og_description'),
+            ])->title(__('seo.recipe_limit.title'));
     }
 }

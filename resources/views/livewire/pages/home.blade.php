@@ -1,147 +1,99 @@
-<div class="bg-papopsi-background text-papopsi-text">
-
-    {{-- HERO full-width con lead --}}
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-        <h1 class="text-5xl sm:text-6xl font-bold max-w-3xl leading-tight">
-            Hai un bambino piccolo, poco tempo e mille dubbi su cosa cucinare? <strong>Non sei solo.</strong>
+<main>
+    <!-- start: hero -->
+    <section class="min-h-[70vh] flex flex-col justify-center items-center text-center px-6 py-16 bg-papopsi-muted">
+        <h1 class="text-3xl sm:text-4xl font-bold max-w-2xl leading-tight text-papopsi-muted">
+            Se ti chiedi <br><span class="text-papopsi-brand">“Cosa gli do oggi?”</span><br> la risposta è una sola:
         </h1>
-        <p class="lead max-w-2xl mt-6">
-            Papopsi ti fa poche domande, capisce la tua situazione e crea subito una pappa <span class="highlight">su misura</span> per il tuo bimbo.
-        </p>
-        <button
-            wire:click="redirectToWizard"
-            class="mt-10 btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition cursor-pointer"
-        >
+        <p class="mt-4 text-2xl font-extrabold text-papopsi-brand tracking-wide">Chiama Papopsi!</p>
+        <p class="max-w-xl text-center text-base mt-6">Ogni giorno, milioni di genitori hanno lo stesso dubbio. Papopsi è la tua spalla tecnologica: ti ascolta, capisce la situazione e crea una pappa su misura. Gratuita, equilibrata, semplice.</p>
+        <a href="{{ route('wizard.intro') }}" class="mt-8 text-base font-semibold text-white bg-papopsi-brand px-6 py-3 rounded-full hover:bg-papopsi-brand/90 transition">
             Prepara la pappa
-        </button>
+        </a>
     </section>
+    <!-- end: hero -->
 
-    {{-- SEZIONE full-width muted per introdurre il problema --}}
-    <section class="py-16 px-6 bg-papopsi-muted text-center">
-        <p class="max-w-3xl mx-auto text-base sm:text-lg leading-relaxed">
-            Ogni giorno ti chiedi: <strong>“Cosa posso cucinare oggi al mio bambino?”</strong><br>
-            Tra forum, blog e consigli discordanti, diventa impossibile anche solo partire.
+    <!-- start: about Papopsi -->
+    <section class="px-6 py-12 bg-papopsi-highlight-200 text-center">
+        <h2 class="text-xl font-bold text-papopsi-muted mb-6">Perché nasce Papopsi</h2>
+
+        <div class="flex flex-col gap-4 max-w-xl mx-auto mb-8">
+            <p class="text-sm text-papopsi-text bg-papopsi-highlight-400 inline-block px-4 py-2 rounded-full self-start">Non so mai cosa cucinare per mio figlio di 9 mesi...</p>
+            <p class="text-sm text-papopsi-text bg-papopsi-info-400 inline-block px-4 py-2 rounded-full self-end">Spero che questo vada bene per la sua età!</p>
+            <p class="text-sm text-papopsi-text bg-papopsi-danger-400 inline-block px-4 py-2 rounded-full self-start">Ha mangiato troppi carboidrati oggi?</p>
+            <p class="text-sm text-papopsi-text bg-papopsi-secondary inline-block px-4 py-2 rounded-full self-end">E se non gli piacesse?</p>
+            <p class="text-sm text-papopsi-text bg-papopsi-success-400 inline-block px-4 py-2 rounded-full self-start">Non ho tempo per leggere libri su libri…</p>
+            <p class="text-sm text-papopsi-text bg-papopsi-brand inline-block px-4 py-2 rounded-full self-end">Vorrei solo un consiglio semplice e sicuro!</p>
+        </div>
+
+        <p class="max-w-xl mx-auto text-base leading-relaxed mt-4">
+            Papopsi nasce da una domanda che conosco bene, perché l’ho vissuta io per primo: <strong>“Cosa preparo oggi per Jacopo?”</strong><br>
+            Quando sei un genitore alle prese con lo svezzamento, ogni pasto diventa un punto interrogativo. Vuoi fare bene, vuoi farlo con amore, ma il tempo è poco e le fonti sono infinite (e spesso contraddittorie).
+        </p>
+        <p class="max-w-xl mx-auto text-base leading-relaxed mt-4">
+            E allora ho deciso di creare Papopsi: <strong>un piccolo aiuto gratuito e giocoso</strong> che usa la tecnologia per semplificarti la vita.<br>
+            Un assistente che sta imparando ogni giorno a fornirti pasti sicuri, genuini e deliziosi. Che non giudica e che ti suggerisce ricette buone, sane, veloci. Personalizzate in base all’età del tuo bimbo e agli ingredienti che hai in casa.
+        </p>
+        <p class="max-w-xl mx-auto text-base leading-relaxed mt-4">
+            È pensato per genitori (e nonni!) veri, che vogliono nutrire con cura senza perdere la testa. E magari, tornare a godersi il momento pappa con più serenità.
         </p>
     </section>
+    <!-- end: about Papopsi -->
 
-    {{-- CARD: Una piccola rivoluzione in cucina --}}
-    <section class="container mx-auto my-16 px-6">
-        <div class="bg-papopsi-card p-8 rounded-2xl shadow-sm max-w-3xl mx-auto">
-            <h2 class="text-3xl font-semibold mb-4">Una piccola rivoluzione in cucina</h2>
-            <div class="space-y-4 text-base sm:text-lg leading-relaxed">
-                <p>
-                    Questa piccola rivoluzione nasce da una domanda che accomuna tantissimi genitori:
-                    <strong>"Cosa posso cucinare oggi al mio bambino?"</strong> Non una volta sola, ma ogni giorno. A volte anche più volte al giorno.
-                </p>
-                <p>
-                    Non serve essere chef stellati, basta voler fare le cose per bene. Eppure tra supermercati, liste ingredienti e mille raccomandazioni che cambiano da blog a forum, diventa difficile anche solo capire da dove partire.
-                </p>
-                <p>
-                    Papopsi è nato esattamente qui: nel mezzo della stanchezza, della confusione, della voglia di fare il meglio.
-                </p>
-                <p>
-                    Sono un padre, lavoro nella tecnologia e sono convinto che, se usati bene, gli strumenti digitali possano rendere più facile la vita di tutti.
-                    Papopsi è il tentativo di unire tutto questo: semplicità, personalizzazione e un aiuto concreto nella quotidianità.
-                </p>
-                <p>
-                    Uno strumento semplice, che ti fa le domande giuste e ti restituisce una proposta chiara, su misura. Un alleato, non un maestro.
-                </p>
-                <p>
-                    Nessuno nasce con tutte le risposte, ma passo dopo passo possiamo imparare a cucinare in modo consapevole, adatto a chi sta crescendo.
-                </p>
+    <!-- start: how it works -->
+    <section class="px-6 py-16 bg-papopsi-muted">
+        <h2 class="text-xl font-bold text-center text-papopsi-muted mb-8">Come funziona</h2>
+        <div class="max-w-xl mx-auto space-y-6">
+            <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-papopsi-success text-white flex items-center justify-center">
+                    <i data-lucide="baby"></i>
+                </div>
+                <p class="text-base leading-relaxed">Inserisci l'età del tuo bambino</p>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-papopsi-success text-white flex items-center justify-center">
+                    <i data-lucide="home"></i>
+                </div>
+                <p class="text-base leading-relaxed">Fornisci a Papopsi il contesto: dove vivi, quanto tempo hai e quanto te la cavi in cucina</p>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-papopsi-success text-white flex items-center justify-center">
+                    <i data-lucide="utensils"></i>
+                </div>
+                <p class="text-base leading-relaxed">Papopsi calcola ingredienti e accessori. Non ti piace qualcosa? Puoi modificarlo o ricalcolare</p>
+            </div>
+            <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-papopsi-success text-white flex items-center justify-center">
+                    <i data-lucide="chef-hat"></i>
+                </div>
+                <p class="text-base leading-relaxed">Papopsi prepara la ricetta su misura. Puoi condividerla, salvarla e tornare quando vuoi</p>
             </div>
         </div>
-    </section>
-
-    {{-- CARD: Come funziona Papopsi? --}}
-    <section class="container mx-auto my-16 px-6">
-        <div class="bg-papopsi-card p-8 rounded-2xl shadow-sm max-w-3xl mx-auto">
-            <h2 class="text-3xl font-semibold mb-4">Come funziona Papopsi?</h2>
-            <ul class="list-disc list-inside space-y-2 text-base sm:text-lg leading-relaxed">
-                <li>Rispondi a poche domande: età, ingredienti, preferenze.</li>
-                <li>In pochi secondi Papopsi genera una ricetta chiara e bilanciata.</li>
-                <li>Modificala, stampala o condividila con un click.</li>
-            </ul>
+        <div class="text-center mt-10">
+            <a href="{{ route('wizard.intro') }}" class="text-base font-semibold text-white bg-papopsi-brand px-6 py-3 rounded-full hover:bg-papopsi-brand/90 transition">
+                Prepara la pappa
+            </a>
         </div>
     </section>
+    <!-- end: how it works -->
 
-    {{-- CTA INTERMEDIA full-width --}}
-    <section class="py-12 text-center px-6">
-        <button
-            wire:click="redirectToWizard"
-            class="btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition cursor-pointer"
-        >
-            Prepara la pappa
-        </button>
-    </section>
-
-    {{-- CARD: Cosa puoi fare per far crescere questo progetto --}}
-    <section class="container mx-auto my-16 px-6">
-        <div class="bg-papopsi-card p-8 rounded-2xl shadow-sm max-w-3xl mx-auto">
-            <h2 class="text-3xl font-semibold mb-4">Cosa puoi fare per far crescere questo progetto</h2>
-            <p class="text-base sm:text-lg leading-relaxed mb-6">
-                Papopsi è gratuito, indipendente e in continua evoluzione. Lo stiamo costruendo con cura, ascoltando chi lo usa davvero: i genitori, come te.
-            </p>
-            <p class="text-base sm:text-lg leading-relaxed mb-6">
-                Il nostro obiettivo è offrire uno strumento utile e accessibile a tutti, anche a chi non può contribuire economicamente. Se non puoi donare, il tuo feedback, la tua esperienza e il tuo supporto sono comunque preziosi: è così che Papopsi può crescere, migliorare e restare davvero al servizio di tutti.
-            </p>
-            <p class="text-base sm:text-lg leading-relaxed mb-6">
-                Se vuoi darci una mano, puoi fare una piccola donazione: ci aiuterai a mantenere gratuito Papopsi e a sviluppare nuove funzionalità.
-            </p>
-            <p class="text-base sm:text-lg leading-relaxed mb-6">
-                Abbiamo tanti progetti in cantiere: una sezione dedicata alle ricette salvate, dove condividere i risultati più utili con altri genitori; un'area personale con lo storico delle pappe create, per poterle ritrovare e modificare con facilità; e la creazione di una community dove scambiare idee, suggerimenti e supporto.
-            </p>
-            <p class="text-base sm:text-lg leading-relaxed mb-6">
-                Ogni contributo ci permette di fare un passo in più. Se puoi, sostienici. Se non puoi, raccontaci cosa pensi: vale tantissimo anche quello.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a
-                    href="https://coff.ee/thegaladev"
-                    target="_blank"
-                    class="btn-pill bg-papopsi-muted text-papopsi-primary hover:bg-papopsi-muted/90 transition">
-                    Dona un cucchiaino 🍴
-                </a>
-                <a href="mailto:ciao@papopsi.it" class="btn-pill border border-papopsi-muted text-papopsi-text hover:bg-papopsi-muted/50 transition">
-                    Scrivici
-                </a>
+    <!-- start: support Papopsi -->
+    <section class="px-6 py-16 bg-papopsi-highlight-200">
+        <div class="max-w-xl mx-auto text-center">
+            <div class="flex justify-center mb-4">
+                <i data-lucide="megaphone" class="w-8 h-8 text-papopsi-brand"></i>
             </div>
+            <h2 class="text-xl font-bold mb-4 text-papopsi-muted">Papopsi ha bisogno anche di te</h2>
+            <p class="text-base leading-relaxed mb-3">
+                La versione gratuita ti permette di generare <strong>fino a 3 ricette al giorno</strong>, tutte personalizzate e pronte da condividere. Ma se vuoi che Papopsi impari ancora di più e ti aiuti meglio... puoi supportare il progetto!
+            </p>
+            <p class="text-base leading-relaxed mb-4">
+                Con una piccola donazione su <a href="https://buymeacoffee.com/thegaladev" class="underline font-medium text-papopsi-brand" target="_blank">Buy Me a Coffee</a>, potrai sbloccare <strong>ricette extra</strong> ogni giorno e aiutare altri genitori come te. Da 5 ricette al giorno per una settimana fino a 20 al giorno per 2 mesi.
+            </p>
+            <p class="text-base leading-relaxed">
+                Se Papopsi ti è stato utile, dagli una mano a crescere. Ogni contributo aiuta. 💗
+            </p>
         </div>
     </section>
+    <!-- end: support Papopsi -->
 
-    {{-- CARD: Resta con noi --}}
-    <section class="container mx-auto my-16 px-6">
-        <div class="bg-papopsi-card p-8 rounded-2xl shadow-sm max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-semibold mb-4">Resta con noi</h2>
-            <p class="text-base sm:text-lg leading-relaxed mb-4">
-                Papopsi è in continua evoluzione: questa lista è il nostro termometro di interesse reale.
-                Se un giorno ti scriveremo, significherà che abbiamo novità pronte per te.
-            </p>
-            <form class="flex flex-col sm:flex-row gap-4 justify-center">
-                <input
-                    type="email"
-                    placeholder="La tua email"
-                    class="flex-1 px-4 py-3 rounded-lg border border-papopsi-muted focus:outline-none focus:ring-2 focus:ring-papopsi-primary"
-                >
-                <button type="submit" class="btn-pill bg-papopsi-primary text-white hover:bg-papopsi-primary/90 transition cursor-pointer">
-                    Iscriviti
-                </button>
-            </form>
-        </div>
-    </section>
-
-    {{-- FOOTER full-width --}}
-    <footer class="py-8 bg-papopsi-card">
-        <div class="container mx-auto px-6 text-center space-y-4 text-sm">
-            <p>
-                Hai dubbi o idee? <a href="mailto:ciao@papopsi.it" class="underline text-papopsi-primary">Scrivici</a>
-            </p>
-            <div class="flex justify-center gap-6">
-                <a href="#">Dona un cucchiaino</a>
-                <a href="#">Privacy</a>
-                <a href="#">Cookie</a>
-            </div>
-            <p class="text-xs text-gray-400">Papopsi © {{ now()->year }}</p>
-        </div>
-    </footer>
-
-</div>
+</main>

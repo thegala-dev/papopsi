@@ -1,75 +1,87 @@
 @import 'tailwindcss';
-@import '../../vendor/livewire/flux/dist/flux.css';
-@import './wizard.css';
+@import './theme.css';
 
-@source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
-@source '../../vendor/livewire/flux/stubs/**/*.blade.php';
-
-@custom-variant dark (&:where(.dark, .dark *));
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
 @theme {
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-
     /* Brand & Accent */
-    --color-brand: 243 114 182;          /* pink.500 */
-    --color-brand-foreground: 255 255 255;
-    --color-papopsi-primary:     #f372b6;
-    --color-papopsi-background:  #f9fafb;
-    --color-papopsi-muted:       #f3f4f6;
-    --color-papopsi-card:        #ffffff;
-    --color-papopsi-text:        #374151;
+    --color-brand: 243, 114, 182;            /* #F372B6 */
+    --color-secondary: 255, 166, 158;        /* #FFA69E */
 
-    /* Backgrounds */
-    --color-background: 249 250 251;     /* gray.50 */
-    --color-muted: 243 244 246;          /* gray.100 */
-    --color-card: 255 255 255;
+    --color-highlight-50: #fffcf7;
+    --color-highlight-100: #fff5e5;
+    --color-highlight-200: #ffecc8;
+    --color-highlight-300: #ffe2a6;
+    --color-highlight-400: #ffd97d;
+    --color-highlight-500: #d9ae00;
+    --color-highlight-600: #ac8a00;
+    --color-highlight-700: #7f6500;
+    --color-highlight-800: #544200;
+    --color-highlight-900: #302400;
+    --color-highlight-950: #1c1500;
 
-    /* Testi e bordi */
-    --color-muted-foreground: 55 65 81;  /* gray.700 */
-    --color-border: 229 231 235;         /* gray.200 */
-    --color-input: 255 255 255;
-    --color-ring: 243 114 182;
+    --color-success-50: #f4fbf6;
+    --color-success-100: #e2f5e9;
+    --color-success-200: #c8eed7;
+    --color-success-300: #b2e2c5;
+    --color-success-400: #a8d5ba;
+    --color-success-500: #89ae98;
+    --color-success-600: #6a8876;
+    --color-success-700: #4f6658;
+    --color-success-800: #33443a;
+    --color-success-900: #1c2620;
+    --color-success-950: #101713;
+
+    --color-info-50: #f0f4fa;
+    --color-info-100: #e1e9f5;
+    --color-info-200: #c7d5ed;
+    --color-info-300: #a8c0e3;
+    --color-info-400: #88abda;
+    --color-info-500: #668ebf;
+    --color-info-600: #4f6f97;
+    --color-info-700: #3b5473;
+    --color-info-800: #26384e;
+    --color-info-900: #14202f;
+    --color-info-950: #0b141f;
+
+    --color-danger-50: #fdeded;
+    --color-danger-100: #fcdede;
+    --color-danger-200: #fab9b9;
+    --color-danger-300: #f89595;
+    --color-danger-400: #f76c6c;
+    --color-danger-500: #f02626;
+    --color-danger-600: #c21d1d;
+    --color-danger-700: #921313;
+    --color-danger-800: #690a0a;
+    --color-danger-900: #3e0404;
+    --color-danger-950: #2b0202;
+
+    /* Neutral */
+    --color-text-50: #dadada;
+    --color-text-100: #b9b9b9;
+    --color-text-200: #777777;
+    --color-text-300: #3a3a3a;
+    --color-text-400: #323232;
+    --color-text-500: #2a2a2a;
+    --color-text-600: #242424;
+    --color-text-700: #1b1b1b;
+    --color-text-800: #151515;
+    --color-text-900: #0b0b0b;
+    --color-text-950: #070707;
+
+    --color-background-50: #ffffff;
+    --color-background-100: #fefcf8;
+    --color-background-200: #fef9f2;
+    --color-background-300: #fdf6ec;
+    --color-background-400: #f5c968;
+    --color-background-500: #c8a454;
+    --color-background-600: #a08241;
+    --color-background-700: #77602f;
+    --color-background-800: #50401d;
+    --color-background-900: #2c220d;
+    --color-background-950: #1c1506;
 }
 
-@layer base {
-
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
-    }
-}
-
-[data-flux-field]:not(ui-radio, ui-checkbox) {
-    @apply grid gap-2;
-}
-
-[data-flux-label] {
-    @apply  !mb-0 !leading-tight;
-}
-
-input:focus[data-flux-control],
-textarea:focus[data-flux-control],
-select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
-}
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
-
-.btn-pill {
-    @apply rounded-xl px-6 py-3 font-medium;
-}
-
-.lead {
-    @apply text-lg sm:text-xl font-medium leading-relaxed;
-}
-
-.highlight {
-    @apply text-papopsi-primary font-semibold;
-}

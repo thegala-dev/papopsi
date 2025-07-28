@@ -2,15 +2,21 @@
 
 namespace App\Livewire\Wizard\Steps;
 
+use App\Exceptions\Contracts\WizardException;
+use App\Exceptions\Wizard\ToolsException;
+use App\Livewire\Wizard\Concerns\DispatchesToasts;
 use App\Managers\Wizard;
 use App\ValueObjects\Agent\Ingredient;
 use App\ValueObjects\Agent\Tool;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Throwable;
 
 class StepDetails extends Component
 {
+    use DispatchesToasts;
+
     public Collection $ingredients;
 
     public Collection $tools;
@@ -27,7 +33,12 @@ class StepDetails extends Component
     public function render()
     {
         return view('livewire.wizard.steps.step-details')
-            ->title('Prepariamo la pappa!');
+            ->layoutData([
+                'description' => __('seo.wizard_details.description'),
+                'keywords' => __('seo.wizard_details.keywords'),
+                'ogTitle' => __('seo.wizard_details.og_title'),
+                'ogDescription' => __('seo.wizard_details.og_description'),
+            ])->title(__('seo.wizard_details.title'));
     }
 
     #[Computed]
@@ -64,11 +75,17 @@ class StepDetails extends Component
 
     public function reloadIngredients(): void
     {
-        /** @var Wizard $wizard */
-        $wizard = session()->get('wizard');
-        $wizard->computeIngredients()->save();
+        try {
+            /** @var Wizard $wizard */
+            $wizard = session()->get('wizard');
+            $wizard->computeIngredients()->save();
 
-        $this->ingredients = $wizard?->context?->ingredients ?: collect();
+            $this->ingredients = $wizard?->context?->ingredients ?: collect();
+        } catch (WizardException $ex) {
+            $this->warning($ex->getMessage(), $ex->cta());
+        } catch (Throwable $ex) {
+            $this->danger($ex->getMessage());
+        }
     }
 
     public function hasTool(string $slug): bool
@@ -87,22 +104,34 @@ class StepDetails extends Component
 
     public function reloadTools(): void
     {
-        /** @var Wizard $wizard */
-        $wizard = session()->get('wizard');
-        $wizard->computeTools()->save();
+        try {
+            /** @var Wizard $wizard */
+            $wizard = session()->get('wizard');
+            $wizard->computeTools()->save();
 
-        $this->tools = $wizard?->context?->tools ?: collect();
+            $this->tools = $wizard?->context?->tools ?: collect();
+        } catch (ToolsException $ex) {
+            $this->warning($ex->getMessage(), $ex->cta());
+        } catch (Throwable $ex) {
+            $this->danger($ex->getMessage());
+        }
     }
 
     public function nextStep(): void
     {
-        /** @var Wizard $wizard */
-        $wizard = session()->get('wizard');
-        $nextStep = $wizard->setIngredients($this->ingredients)
-            ->setTools($this->tools)
-            ->save()
-            ->nextStep();
+        try {
+            /** @var Wizard $wizard */
+            $wizard = session()->get('wizard');
+            $nextStep = $wizard->setIngredients($this->ingredients)
+                ->setTools($this->tools)
+                ->save()
+                ->nextStep();
 
-        $this->redirect($nextStep);
+            $this->redirect($nextStep);
+        } catch (WizardException $ex) {
+            $this->warning($ex->getMessage(), $ex->cta());
+        } catch (Throwable $ex) {
+            $this->danger($ex->getMessage());
+        }
     }
 }

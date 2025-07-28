@@ -3,6 +3,7 @@
 namespace App\Managers;
 
 use App\Ai\Recipes\RecipeOutput;
+use App\ValueObjects\Account\TierCookie;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -35,8 +36,14 @@ class Recipe
         return $this->recipes->count() < $this->limitPerDay();
     }
 
-    public function limitPerDay()
+    public function limitPerDay(): int
     {
+        if ($this->request->hasCookie('papopsi-premium')) {
+            $cookie = TierCookie::fromBase64($this->request->cookie('papopsi-premium'));
+
+            return $cookie->recipesPerDay();
+        }
+
         return config('account.recipes.per_day');
     }
 

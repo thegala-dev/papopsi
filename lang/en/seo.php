@@ -1,0 +1,88 @@
+<?php
+
+return [
+    'homepage' => [
+        'title' => 'Papopsi – Idee di pappe personalizzate per bambini da 6 mesi a 5 anni',
+        'description' => 'Papopsi ti aiuta a creare pappe sane, semplici e su misura per il tuo bambino. Nessun login, solo ricette personalizzate per ogni fase dello svezzamento.',
+        'keywords' => 'svezzamento, ricette bimbi, pappa neonato, svezzamento 6 mesi, ricette bambini 1 anno, cosa cucinare per bambini piccoli',
+        'og_title' => 'Papopsi – Ricette su misura per il tuo bambino',
+        'og_description' => 'Scopri idee di pappa perfette per ogni età, da 6 mesi a 3 anni. Gratis, semplice, fatto con amore.',
+    ],
+    'wizard_intro' => [
+        'title' => 'Inizia a creare la pappa perfetta per il tuo bambino – Papopsi',
+        'description' => 'Rispondi a poche domande e ottieni una ricetta su misura per il tuo bimbo. Gratis, veloce, senza registrazione.',
+        'keywords' => '',
+        'og_title' => 'Crea una pappa su misura per il tuo bimbo',
+        'og_description' => 'Papopsi ti guida passo passo nella creazione di una pappa personalizzata. Semplice e gratuita.',
+    ],
+    'wizard_age' => [
+        'title' => 'Quanti mesi ha il tuo bambino? – Papopsi',
+        'description' => 'Seleziona l’età del tuo bimbo per iniziare: da 6 mesi fino ai 3 anni.',
+        'keywords' => '',
+        'og_title' => 'Inizia con l’età del tuo bimbo',
+        'og_description' => 'Ogni ricetta di Papopsi è pensata in base all’età. Inserisci l’età per cominciare.',
+    ],
+    'wizard_context' => [
+        'title' => 'Che tipo di pappa cerchi oggi? – Papopsi',
+        'description' => 'Hai poco tempo? Vuoi usare ingredienti freschi? Papopsi adatta la pappa al tuo contesto.',
+        'keywords' => '',
+        'og_title' => 'Papopsi si adatta a te',
+        'og_description' => 'Ogni giorno è diverso. Papopsi ti aiuta a trovare la pappa giusta in base al tempo, preferenze e ingredienti.',
+    ],
+    'wizard_summary' => [
+        'title' => 'Tutto pronto! Rivedi le preferenze e genera la pappa – Papopsi',
+        'description' => 'Controlla le scelte fatte prima di generare la ricetta personalizzata per il tuo bambino.',
+        'keywords' => '',
+        'og_title' => 'Pronto a cucinare su misura?',
+        'og_description' => 'Ultimo passo prima della magia: controlla il riepilogo e lascia fare a Papopsi.',
+    ],
+    'wizard_details' => [
+        'title' => 'Aggiungi dettagli utili sulla pappa – Papopsi',
+        'description' => 'Allergie, preferenze o quantità? Personalizza ancora di più la pappa del tuo bambino.',
+        'keywords' => '',
+        'og_title' => 'Una pappa davvero su misura',
+        'og_description' => 'Papopsi considera anche le esigenze specifiche del tuo bimbo. Aggiungi i dettagli prima della generazione.',
+    ],
+    'recipe_show' => [
+        'title' => ':title – Ricetta personalizzata con Papopsi',
+        'description' => 'Una pappa su misura per il tuo bimbo: semplice, sana e adatta all’età. Scopri come prepararla passo dopo passo.',
+        'keywords' => '',
+        'og_title' => ':title – Scopri la pappa perfetta per il tuo bimbo',
+        'og_description' => 'Una ricetta generata su misura grazie a Papopsi. Ingredienti, preparazione e consigli per cucinare in serenità.',
+    ],
+    'recipe_limit' => [
+        'title' => 'Stop! Hai raggiunto il limite di pappe per oggi – Papopsi',
+        'description' => 'Per garantire un’esperienza equa per tutti, puoi generare fino a 3 pappe al giorno. Torna domani o scopri come sbloccare l’accesso.',
+        'keywords' => '',
+        'og_title' => 'Limite giornaliero raggiunto',
+        'og_description' => 'Hai già creato 3 pappe oggi. Ritorna domani o scopri come supportare Papopsi e accedere senza limiti.',
+    ],
+    'account_activated' => [
+        'title' => 'Grazie di cuore! Ora puoi generare tutte le pappe che vuoi – Papopsi',
+        'description' => 'Il tuo account è stato attivato. Da oggi puoi creare pappe senza limiti. Papopsi ti ringrazia per il supporto.',
+        'keywords' => '',
+        'og_title' => 'Papopsi dice grazie! ❤️',
+        'og_description' => 'Grazie per aver supportato Papopsi. Da oggi puoi creare tutte le pappe che vuoi, ogni giorno.',
+    ],
+    'recipe_share' => [
+        'title' => ':title – Ricetta personalizzata generata con Papopsi',
+        'description' => 'Scopri questa pappa su misura per bambini da 6 mesi a 3 anni. Creata tramite Papopsi, il wizard gratuito per genitori consapevoli.',
+        'keywords' => '',
+        'og_title' => ':title – Ricetta personalizzata per bambini piccoli',
+        'og_description' => 'Papopsi crea pappe sane e su misura per ogni bambino. Scopri questa ricetta e prova a generare la tua.',
+    ],
+    'recipe_not_found' => [
+        'title' => 'Ops! Ricetta non trovata – Papopsi',
+        'description' => 'La ricetta che stai cercando non è più disponibile o è scaduta. Prova a crearne una nuova con Papopsi.',
+        'keywords' => '',
+        'og_title' => 'Ricetta non disponibile',
+        'og_description' => 'Forse il link è scaduto. Torna su Papopsi per creare una nuova pappa personalizzata.',
+    ],
+    'default' => [
+        'title' => 'Papopsi – Ricette personalizzate per bambini da 6 mesi a 3 anni',
+        'description' => 'Scopri Papopsi, il wizard gratuito per creare pappe su misura per ogni bambino. Nessun login, solo ricette su misura.',
+        'keywords' => '',
+        'og_title' => 'Papopsi – Idee di pappa su misura',
+        'og_description' => 'Papopsi aiuta genitori e nonni a creare pappe sane e semplici per bambini piccoli. Gratuito, facile, senza registrazione.',
+    ],
+];

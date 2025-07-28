@@ -49,7 +49,12 @@ class StepContext extends Component
     public function render()
     {
         return view('livewire.wizard.steps.step-context')
-            ->title('Prepariamo la pappa!');
+            ->layoutData([
+                'description' => __('seo.wizard_context.description'),
+                'keywords' => __('seo.wizard_context.keywords'),
+                'ogTitle' => __('seo.wizard_context.og_title'),
+                'ogDescription' => __('seo.wizard_context.og_description'),
+            ])->title(__('seo.wizard_context.title'));
     }
 
     #[Computed]

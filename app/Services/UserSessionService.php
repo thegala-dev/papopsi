@@ -41,7 +41,7 @@ class UserSessionService implements Contracts\UserSessionService
 
     private function format(?string $ip): string
     {
-        $localIps = ['127.0.0.1', '::1', 'localhost'];
+        $localIps = config('services.ipinfo.invalid_ips');
 
         if (empty($ip) || in_array($ip, $localIps, true) || ! filter_var($ip, FILTER_VALIDATE_IP)) {
             return config('services.ipinfo.localhost_ip', '8.8.8.8');

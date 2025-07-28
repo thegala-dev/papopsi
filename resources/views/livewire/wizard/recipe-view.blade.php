@@ -1,42 +1,47 @@
 <div class="max-w-3xl mx-auto px-4 py-12 space-y-12">
-    <div class="wizard-card">
-        <h1 class="text-4xl font-bold mb-4 text-papopsi-primary">{{ $recipe->title }}</h1>
+    <div class="bg-white border border-papopsi-secondary rounded-xl shadow-sm p-6 space-y-6">
+        <h1 class="text-3xl font-bold text-papopsi-brand">{{ $recipe->title }}</h1>
 
-        <div class="flex flex-col gap-2">
-            @if($this->recipeLimitReached)
-                <flux:callout variant="warning" icon="clock">
-                    <flux:callout.heading>
-                        Hai raggiunto il limite massimo di ricette per oggi!
-                    </flux:callout.heading>
-                    <flux:callout.text>Torna domani per poter creare delle nuove ricette, oppure supporta il progetto e sblocca le ricette illimitate!</flux:callout.text>
-                    <x-slot name="actions">
-                        <flux:button href="https://coff.ee/thegaladev" target="_blank">Dona un cucchiaino 🍴</flux:button>
-                        <flux:button variant="ghost" href="mailto:ciao@papopsi.it">Scrivici per soluzioni dedicate</flux:button>
-                    </x-slot>
-                </flux:callout>
-            @endif
+        @if($this->recipeLimitReached)
+            <div class="bg-papopsi-highlight-20 border-l-4 border-papopsi-highlight p-4 rounded-lg space-y-2">
+                <div class="flex items-center gap-2 font-semibold text-papopsi-highlight">
+                    <i data-lucide="clock" class="w-5 h-5"></i>
+                    Hai raggiunto il limite massimo di ricette per oggi!
+                </div>
+                <p class="text-sm text-papopsi-highlight">
+                    Torna domani per nuove ricette oppure supporta il progetto e sblocca le ricette illimitate!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-2 mt-2">
+                    <a href="https://coff.ee/thegaladev" target="_blank" class="bg-papopsi-brand text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-papopsi-highlight transition">
+                        Dona un cucchiaino 🍴
+                    </a>
+                    <a href="mailto:ciao@papopsi.it" class="text-papopsi-brand px-4 py-2 text-sm font-medium rounded-md hover:underline">
+                        Scrivici per soluzioni dedicate
+                    </a>
+                </div>
+            </div>
+        @endif
 
-            <flux:callout variant="success" icon="clock">
-                <flux:callout.heading>
-                    Tempo totale di preparazione: <strong>{{ $recipe->totalTime }}</strong>
-                </flux:callout.heading>
-            </flux:callout>
+        <div class="bg-papopsi-success-50 border-l-4 border-papopsi-success p-4 rounded-lg flex items-start gap-2">
+            <i data-lucide="timer" class="w-5 h-5 text-papopsi-success mt-1"></i>
+            <p class="text-sm font-semibold text-papopsi-success leading-snug">
+                Tempo totale di preparazione: <strong>{{ $recipe->totalTime }}</strong>
+            </p>
         </div>
 
-        <p class="text-gray-700 leading-relaxed mt-6">{{ $recipe->description }}</p>
+        <p class="text-gray-700 leading-relaxed">{{ $recipe->description }}</p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
-                <h2 class="text-lg font-semibold text-gray-800 mb-2">Ingredienti</h2>
+                <h2 class="text-lg font-semibold text-papopsi-secondary mb-2">Ingredienti</h2>
                 <ul class="list-disc list-inside space-y-1 text-gray-700">
                     @foreach($recipe->ingredients as $ingredient)
                         <li>{{ $ingredient->label }}</li>
                     @endforeach
                 </ul>
             </div>
-
             <div>
-                <h2 class="text-lg font-semibold text-gray-800 mb-2">Strumenti</h2>
+                <h2 class="text-lg font-semibold text-papopsi-secondary mb-2">Strumenti</h2>
                 <ul class="list-disc list-inside space-y-1 text-gray-700">
                     @foreach($recipe->tools as $tool)
                         <li>{{ $tool->label }}</li>
@@ -44,17 +49,17 @@
                 </ul>
             </div>
         </div>
-    </div>
 
-    <div class="wizard-card">
-        <h2 class="text-2xl font-bold mb-6 text-papopsi-primary">Procedimento passo passo</h2>
+        <div class="border-b border-papopsi-secondary"></div>
+
+        <h2 class="text-2xl font-bold text-papopsi-secondary">Procedimento passo passo</h2>
 
         <div x-data="{ open: null }" class="space-y-4">
             @foreach($recipe->steps as $index => $step)
-                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <div class="border border-papopsi-muted rounded-lg overflow-hidden">
                     <button
                         type="button"
-                        class="w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 flex items-center justify-between"
+                        class="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 cursor-pointer flex items-center justify-between"
                         @click="open === {{ $index }} ? open = null : open = {{ $index }}"
                     >
                         <span class="font-medium text-gray-800">{{ $step->title }}</span>
@@ -93,30 +98,55 @@
         </div>
     </div>
 
-    <div class="wizard-card space-y-4">
-        <flux:button class="w-full" icon="bookmark" variant="outline">
-            Salva la ricetta
-        </flux:button>
+    <div class="bg-papopsi-muted border border-papopsi-secondary rounded-xl shadow-sm p-4">
+        <div>
+            <h2 class="text-2xl font-bold text-papopsi-secondary">Hai trovato utile questa pagina?</h2>
+            <p class="text-papopsi-muted">Condividila con altri genitori!</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2 mt-4">
+            <button
+                @click="navigator.clipboard.writeText('{{ $this->shareRouteUrl }}').then(() => $dispatch('request-toast', {type: '{{ \App\Enums\Support\ToastType::SUCCESS->name }}', message: 'Link copiato con successo', 'title': 'Horray!'}))"
+                class="bg-papopsi-secondary hover:bg-papopsi-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition flex gap-2 items-center"
+            >
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                Copia link
+            </button>
 
-        <flux:button class="w-full" icon="share">
-            Condividi la ricetta
-        </flux:button>
+            <a
+                href="{{$this->shareWaMessage}}"
+                target="_blank"
+                rel="noopener"
+                class="bg-papopsi-secondary hover:bg-papopsi-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition flex gap-2 items-center"
+            >
+                <i data-lucide="send" class="w-4 h-4"></i>
+                Invia su WhatsApp
+            </a>
+        </div>
     </div>
 
     @if(!$this->recipeLimitReached)
-        <flux:callout icon="information-circle">
-            <flux:callout.heading>
-                <p class="text-gray-900">Hai ancora <span class="font-bold">{{ $this->remainingRecipes }}</span> cucchiaini a disposizione oggi!</p>
-            </flux:callout.heading>
-            <flux:callout.text>
-                <p class="text-gray-700 mb-2">Ogni cucchiaino che prepari con Papopsi è il risultato di tanto amore e un pizzico di tecnologia.</p>
-                <p class="text-gray-700">Se ti va di darci una spinta, puoi offrirci un cucchiaino virtuale o scriverci: ci aiuterai a rendere l’app ancora più utile per tutti!</p>
-            </flux:callout.text>
-            <x-slot name="actions">
-                <flux:button href="https://coff.ee/thegaladev" target="_blank">Dona un cucchiaino 🍴</flux:button>
-                <flux:button href="{{ route('wizard.intro') }}">Prepara un'altra ricetta 🍲</flux:button>
-                <flux:button variant="ghost" href="mailto:ciao@papopsi.it">Scrivici per soluzioni dedicate</flux:button>
-            </x-slot>
-        </flux:callout>
+        <div class="bg-papopsi-info-50 border-l-4 border-papopsi-info p-4 rounded-lg space-y-2">
+            <div class="flex items-center gap-2 font-semibold text-papopsi-info">
+                <i data-lucide="info" class="w-5 h-5"></i>
+                Hai ancora <span class="font-bold">{{ $this->remainingRecipes }}</span> cucchiaini a disposizione oggi!
+            </div>
+            <p class="text-sm text-papopsi-info">
+                Ogni cucchiaino che prepari con Papopsi è il risultato di tanto amore e un pizzico di tecnologia.
+            </p>
+            <p class="text-sm text-papopsi-info">
+                Se ti va di darci una spinta, puoi offrirci un cucchiaino virtuale o scriverci: ci aiuterai a rendere l’app ancora più utile per tutti!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2 mt-2">
+                <a href="https://coff.ee/thegaladev" target="_blank" class="bg-papopsi-info-300 hover:bg-papopsi-info-400 text-white px-4 py-2 rounded-md text-sm font-medium transition">
+                    Dona un cucchiaino 🍴
+                </a>
+                <a href="{{ route('wizard.intro') }}" class="text-papopsi-info px-4 py-2 text-sm font-medium rounded-md hover:underline">
+                    Prepara un'altra ricetta 🍲
+                </a>
+                <a href="{{ config('links.telegram') }}" class="text-papopsi-info px-4 py-2 text-sm font-medium rounded-md hover:underline">
+                    Scrivici per soluzioni dedicate
+                </a>
+            </div>
+        </div>
     @endif
 </div>

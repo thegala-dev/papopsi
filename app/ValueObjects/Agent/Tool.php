@@ -44,4 +44,16 @@ class Tool extends ValueObject
             optional: $data['optional'] ?? false,
         );
     }
+
+    public function compress(): string
+    {
+        return base64_encode($this->toJson());
+    }
+
+    public static function decompress(string $base64): Tool
+    {
+        return self::from(
+            json_decode(base64_decode($base64), true)
+        );
+    }
 }

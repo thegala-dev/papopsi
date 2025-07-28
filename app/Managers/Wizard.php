@@ -13,13 +13,19 @@ use App\Ai\Tools\ToolsOutput;
 use App\Ai\Tools\ToolsPromptBuilder;
 use App\Enums\Wizard\UserProfiles;
 use App\Enums\Wizard\WizardSteps;
+use App\Exceptions\Wizard\IngredientsException;
+use App\Exceptions\Wizard\RecipeException;
+use App\Exceptions\Wizard\ToolsException;
 use App\ValueObjects\Agent\CookingContext;
 use App\ValueObjects\Agent\LocalMetadata;
 use App\ValueObjects\Agent\MealRequestContext;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use JsonSerializable;
+use NeuronAI\Exceptions\NeuronException;
 
 class Wizard implements Arrayable, Jsonable, JsonSerializable
 {
@@ -118,29 +124,55 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
         return tap($this, fn (Wizard $wizard) => $wizard->context->tools = $tools);
     }
 
+    /** @throws ToolsException|BindingResolutionException */
     public function computeIngredients(): Wizard
     {
-        $agent = app()->make(IngredientsAgent::class);
-        /** @var IngredientsOutput $response */
-        $response = $agent->execute(new IngredientsPromptBuilder($this->context));
+        try {
+            $agent = app()->make(IngredientsAgent::class);
+            /** @var IngredientsOutput $response */
+            $response = $agent->execute(new IngredientsPromptBuilder($this->context));
 
-        return $this->setIngredients(collect($response->ingredients));
+            return $this->setIngredients(collect($response->ingredients));
+        } catch (NeuronException $ex) {
+            throw new IngredientsException(
+                cta: collect(['reloadPage' => true, 'mailTo' => true]),
+                previous: $ex
+            );
+        }
     }
 
+    /** @throws ToolsException|BindingResolutionException */
     public function computeTools(): Wizard
     {
-        $agent = app()->make(ToolsAgent::class);
-        /** @var ToolsOutput $response */
-        $response = $agent->execute(new ToolsPromptBuilder($this->context));
+        try {
+            $agent = app()->make(ToolsAgent::class);
+            /** @var ToolsOutput $response */
+            $response = $agent->execute(new ToolsPromptBuilder($this->context));
 
-        return $this->setTools(collect($response->tools));
+            return $this->setTools(collect($response->tools));
+        } catch (NeuronException $ex) {
+            throw new ToolsException(
+                cta: collect(['reloadPage' => true, 'mailTo' => true]),
+                previous: $ex
+            );
+        }
     }
 
+    /** @throws ToolsException|BindingResolutionException */
     public function finalize(): RecipeOutput
     {
-        $agent = app()->make(RecipeAgent::class);
+        try {
+            $agent = app()->make(RecipeAgent::class);
 
-        return $agent->execute(new RecipePromptBuilder($this->context));
+            return $agent->execute(new RecipePromptBuilder($this->context));
+        } catch (NeuronException $ex) {
+            Log::error($ex->getMessage(), [
+                'context' => $this->context->toArray(),
+            ]);
+            throw new RecipeException(
+                cta: collect(['reloadPage' => true, 'mailTo' => true])
+            );
+        }
     }
 
     public function toArray(): array

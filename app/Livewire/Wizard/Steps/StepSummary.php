@@ -3,20 +3,29 @@
 namespace App\Livewire\Wizard\Steps;
 
 use App\Enums\Wizard\MealType;
+use App\Exceptions\Contracts\WizardException;
+use App\Livewire\Wizard\Concerns\DispatchesToasts;
 use App\Livewire\Wizard\Concerns\WithComputedMeal;
 use App\Managers\Recipe;
 use App\Managers\Wizard;
 use Livewire\Component;
+use Throwable;
 
 class StepSummary extends Component
 {
-    use WithComputedMeal;
+    use DispatchesToasts,
+        WithComputedMeal;
 
     public function render()
     {
         return view('livewire.wizard.steps.step-summary')
-            ->with('wizard', session()->get('wizard'))
-            ->title('Prepariamo la pappa!');
+            ->layoutData([
+                'description' => __('seo.wizard_summary.description'),
+                'keywords' => __('seo.wizard_summary.keywords'),
+                'ogTitle' => __('seo.wizard_summary.og_title'),
+                'ogDescription' => __('seo.wizard_summary.og_description'),
+            ])->with('wizard', session()->get('wizard'))
+            ->title(__('seo.wizard_summary.title'));
     }
 
     public function getMealType(): MealType
@@ -41,11 +50,17 @@ class StepSummary extends Component
 
     private function finalizeRecipe(): void
     {
-        $recipe = Wizard::instance()->finalize();
+        try {
+            $recipe = Wizard::instance()->finalize();
 
-        $manager = new Recipe(request());
-        $manager->addRecipe($recipe);
+            $manager = new Recipe(request());
+            $manager->addRecipe($recipe);
 
-        session()->put('recipe', $recipe);
+            session()->put('recipe', $recipe);
+        } catch (WizardException $ex) {
+            $this->warning($ex->getMessage(), $ex->cta());
+        } catch (Throwable $ex) {
+            $this->danger($ex->getMessage());
+        }
     }
 }

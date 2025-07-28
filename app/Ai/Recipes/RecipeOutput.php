@@ -71,4 +71,39 @@ class RecipeOutput extends ValueObject implements AgentOutput
             steps: array_map(fn (array $item) => RecipeStep::from($item), $data['steps']),
         );
     }
+
+    public function compress(): string
+    {
+        return json_encode([
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'description' => $this->description,
+            'totalTime' => $this->totalTime,
+            'ingredients' => collect($this->ingredients)->map(fn (Ingredient $item) => $item->compress()),
+            'tools' => collect($this->tools)->map(fn (Tool $item) => $item->compress()),
+            'steps' => collect($this->steps)->map(fn (RecipeStep $item) => $item->compress()),
+        ]);
+    }
+
+    public static function decompress(string $base64): RecipeOutput
+    {
+        $data = json_decode(
+            gzuncompress(base64_decode(strtr($base64, '-_', '+/'))),
+            true
+        );
+
+        $data['ingredients'] = collect($data['ingredients'] ?? [])->map(fn (string $item) => Ingredient::decompress($item))->all();
+        $data['tools'] = collect($data['tools'] ?? [])->map(fn (string $item) => Tool::decompress($item))->all();
+        $data['steps'] = collect($data['steps'] ?? [])->map(fn (string $item) => RecipeStep::decompress($item))->all();
+
+        return new self(
+            title: $data['title'],
+            slug: $data['slug'],
+            description: $data['description'],
+            totalTime: $data['totalTime'],
+            ingredients: $data['ingredients'],
+            tools: $data['tools'],
+            steps: $data['steps'],
+        );
+    }
 }

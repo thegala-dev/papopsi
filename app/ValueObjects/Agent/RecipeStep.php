@@ -49,7 +49,7 @@ class RecipeStep extends ValueObject
         ];
     }
 
-    public static function from(array $data): ValueObject
+    public static function from(array $data): RecipeStep
     {
         return new self(
             title: $data['title'],
@@ -58,6 +58,18 @@ class RecipeStep extends ValueObject
             time: $data['time'],
             ingredients: array_map(fn (array $item) => Ingredient::from($item), $data['ingredients']),
             tools: array_map(fn (array $item) => Tool::from($item), $data['tools']),
+        );
+    }
+
+    public function compress(): string
+    {
+        return base64_encode($this->toJson());
+    }
+
+    public static function decompress(string $base64): RecipeStep
+    {
+        return self::from(
+            json_decode(base64_decode($base64), true)
         );
     }
 }

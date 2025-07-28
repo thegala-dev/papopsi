@@ -3,8 +3,11 @@
 use App\Http\Middleware\CheckRecipeLimit;
 use App\Http\Middleware\GenerateSessionData;
 use App\Http\Middleware\RedirectToStep;
+use App\Livewire\Account\PremiumActivation;
 use App\Livewire\Pages\Home;
 use App\Livewire\Support\RecipeLimit;
+use App\Livewire\Support\RecipeNotFound;
+use App\Livewire\Support\SharedRecipe;
 use App\Livewire\Wizard\Intro;
 use App\Livewire\Wizard\Recipe;
 use App\Livewire\Wizard\Steps\StepAge;
@@ -52,6 +55,23 @@ Route::prefix('wizard')
                 Route::get('/limit-reached', RecipeLimit::class)
                     ->name('limit-reached');
             });
+    });
+
+Route::prefix('recipe')
+    ->name('recipe.')
+    ->group(function () {
+        Route::get('/not-found', RecipeNotFound::class)
+            ->name('not-found');
+
+        Route::get('/{token}', SharedRecipe::class)
+            ->name('share');
+    });
+
+Route::prefix('account')
+    ->name('account.')
+    ->group(function () {
+        Route::get('/activate/{token}', PremiumActivation::class)
+            ->name('activate');
     });
 // Route::view('dashboard', 'dashboard')
 //    ->middleware(['auth', 'verified'])
