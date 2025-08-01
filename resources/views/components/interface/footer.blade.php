@@ -4,7 +4,7 @@
             Hai domande o idee? <a href="{{ config('links.telegram') }}" class="underline text-papopsi-brand">Scrivici su Telegram</a>
         </p>
         <div class="flex justify-center gap-6">
-            <a href="https://coff.ee/thegaladev">Dona</a>
+            <a href="{{ config('links.bmac') }}">Dona</a>
             <a href="#">Privacy</a>
             <a href="#">Cookie</a>
         </div>

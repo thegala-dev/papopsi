@@ -112,7 +112,7 @@
             Se ti va di darci una spinta, puoi offrirci un cucchiaino virtuale o scriverci: ci aiuterai a rendere l’app ancora più utile per tutti!
         </p>
         <div class="flex flex-col sm:flex-row gap-2 mt-2">
-            <a href="https://coff.ee/thegaladev" target="_blank" class="bg-papopsi-info-300 hover:bg-papopsi-info-400 text-white px-4 py-2 rounded-md text-sm font-medium transition">
+            <a href="{{ config('links.bmac') }}" target="_blank" class="bg-papopsi-info-300 hover:bg-papopsi-info-400 text-white px-4 py-2 rounded-md text-sm font-medium transition">
                 Dona un cucchiaino 🍴
             </a>
             <a href="{{ route('wizard.intro') }}" class="text-papopsi-info px-4 py-2 text-sm font-medium rounded-md hover:underline">

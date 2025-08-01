@@ -21,7 +21,7 @@ return [
         'simple_kitchen' => 'molto semplice',
         'basic_kitchen' => 'semplice ma ben fornita',
         'good_kitchen' => 'equilibrata tra piccoli e grandi strumenti',
-        'deluxe_kitchen' => 'ho di tutto e di più',
+        'deluxe_kitchen' => 'fornita di tutto e di più',
         'junior' => 'sono alle prime armi in cucina, ma ci provo',
         'mid' => 'me la cavo in cucina, anche senza ricette',
         'senior' => 'in cucina mi muovo con sicurezza',
