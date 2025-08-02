@@ -16,6 +16,14 @@ class StepSummary extends Component
     use DispatchesToasts,
         WithComputedMeal;
 
+    public function mount(): void
+    {
+        $this->dispatch('wizardStep', [
+            'step' => 'cooking-context',
+            'context' => Wizard::instance()->context->toArray(),
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.wizard.steps.step-summary')
@@ -42,13 +50,14 @@ class StepSummary extends Component
 
     public function finalize(Recipe $recipeManager): void
     {
-        $this->finalizeRecipe();
-        session()->forget('wizard');
+        if ($this->finalizeRecipe()) {
+            session()->forget('wizard');
 
-        $this->redirect(route('wizard.recipe.index'));
+            $this->redirect(route('wizard.recipe.index', ['track' => true]));
+        }
     }
 
-    private function finalizeRecipe(): void
+    private function finalizeRecipe(): bool
     {
         try {
             $recipe = Wizard::instance()->finalize();
@@ -57,10 +66,14 @@ class StepSummary extends Component
             $manager->addRecipe($recipe);
 
             session()->put('recipe', $recipe);
+
+            return true;
         } catch (WizardException $ex) {
             $this->warning($ex->getMessage(), $ex->cta());
         } catch (Throwable $ex) {
             $this->danger($ex->getMessage());
         }
+
+        return false;
     }
 }

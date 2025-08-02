@@ -8,6 +8,14 @@ use Livewire\Component;
 
 class StepAge extends Component
 {
+    public function mount(): void
+    {
+        $this->dispatch('wizardStep', [
+            'step' => 'age',
+            'context' => Wizard::instance()->context->toArray(),
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.wizard.steps.step-age')

@@ -6,7 +6,10 @@
         </h1>
         <h2 class="mt-4 text-xl font-bold text-papopsi-muted tracking-wide">Un alleato in cucina per preparare <span class="text-papopsi-brand">pappe sane, veloci e senza stress</span>.</h2>
         <p class="max-w-xl text-center text-base mt-6">Più rapido di una ricerca, più affidabile di una suocera.</p>
-        <a href="{{ route('wizard.intro') }}" class="text-sm font-semibold text-white bg-papopsi-brand mt-8 px-4 py-2 rounded-full hover:shadow-md transition flex items-center gap-2">
+        <a
+            href="{{ route('wizard.intro', ['source' => 'hero']) }}"
+            class="text-sm font-semibold text-white bg-papopsi-brand mt-8 px-4 py-2 rounded-full hover:shadow-md transition flex items-center gap-2"
+        >
             <i data-lucide="chef-hat"></i>
             Prepara la pappa
         </a>
@@ -21,7 +24,7 @@
 
                 <p class="max-w-xl mx-auto text-base leading-relaxed mt-4">
                     Sono anche io un genitore. Quando ho iniziato lo svezzamento di mio figlio mi sono trovato davanti a mille blog, libri di esperti e consigli non richiesti... e zero tempo per fare tutto.<br/>
-                    Così, invece di perdermi tra le ricerche infinite, ho deciso di creare lo strumento che avrei voluto avere: semplice, affidabile e fatto per noi genitori.
+                    Così, invece di perdermi tra ricerche infinite, ho deciso di creare lo strumento che avrei voluto avere: semplice, affidabile e fatto per noi genitori.
                 </p>
                 <p class="max-w-xl mx-auto text-base leading-relaxed mt-4">
                     Papopsi è il tuo alleato in cucina: un wizard facile e veloce che trasforma quello che hai in casa in ricette adatte al tuo bimbo, senza stress e senza perdere tempo.
@@ -67,7 +70,10 @@
         </div>
 
         <div class="flex justify-center mt-10 mb-10 mx-auto">
-            <a href="{{ route('wizard.intro') }}" class="text-sm font-semibold text-white bg-papopsi-brand mt-8 px-4 py-2 rounded-full hover:shadow-md transition flex items-center gap-2">
+            <a
+                href="{{ route('wizard.intro', ['source' => 'home']) }}"
+                class="text-sm font-semibold text-white bg-papopsi-brand mt-8 px-4 py-2 rounded-full hover:shadow-md transition flex items-center gap-2"
+            >
                 <i data-lucide="chef-hat"></i>
                 Prepara la pappa
             </a>

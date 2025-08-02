@@ -12,11 +12,16 @@ class RecipeLimit extends Component
 
     public Collection $recipes;
 
-    public function mount()
+    public function mount(): void
     {
         $manager = new Recipe(request());
         $this->remainingSeconds = now()->diffInSeconds($manager->getTtl());
         $this->recipes = $manager->recipes;
+
+        $this->dispatch('limitReached', [
+            'totalRecipes' => $this->recipes->count(),
+            'dailyLimit' => $manager->limitPerDay(),
+        ]);
     }
 
     public function render()

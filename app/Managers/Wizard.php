@@ -132,6 +132,12 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
             /** @var IngredientsOutput $response */
             $response = $agent->execute(new IngredientsPromptBuilder($this->context));
 
+            if ($response === null) {
+                throw new IngredientsException(
+                    cta: collect(['reloadPage' => true, 'mailTo' => true]),
+                );
+            }
+
             return $this->setIngredients(collect($response->ingredients));
         } catch (NeuronException $ex) {
             throw new IngredientsException(
@@ -148,6 +154,12 @@ class Wizard implements Arrayable, Jsonable, JsonSerializable
             $agent = app()->make(ToolsAgent::class);
             /** @var ToolsOutput $response */
             $response = $agent->execute(new ToolsPromptBuilder($this->context));
+
+            if ($response === null) {
+                throw new ToolsException(
+                    cta: collect(['reloadPage' => true, 'mailTo' => true]),
+                );
+            }
 
             return $this->setTools(collect($response->tools));
         } catch (NeuronException $ex) {

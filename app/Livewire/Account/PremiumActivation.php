@@ -14,15 +14,18 @@ class PremiumActivation extends Component
     public function mount(PremiumAccountService $premiumAccountService): void
     {
         if (! request()->hasCookie('papopsi-premium')) {
-            $this->cookie = $premiumAccountService->setCookie(TierCookie::fromBase64(
+            $this->cookie = $premiumAccountService->setCookie($cookie = TierCookie::fromBase64(
                 request()->route()->parameter('token')
             ));
+
+            $this->dispatch('premiumActivated', [
+                'plan' => strtolower($cookie->tier->name),
+            ]);
 
             Log::debug('New Cookie', [
                 'cookie' => $this->cookie->tier->name,
                 'expires' => $this->cookie->expiresAt?->diffForHumans(),
             ]);
-
         } else {
             $this->cookie = $premiumAccountService->getCookie();
 

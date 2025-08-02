@@ -25,6 +25,10 @@ class StepDetails extends Component
     {
         /** @var Wizard $wizard */
         $wizard = session()->get('wizard');
+        $this->dispatch('wizardStep', [
+            'step' => 'details',
+            'context' => $wizard->context->toArray(),
+        ]);
 
         $this->ingredients = $wizard?->context?->ingredients ?: collect();
         $this->tools = $wizard?->context?->tools ?: collect();

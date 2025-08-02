@@ -28,6 +28,10 @@ class StepContext extends Component
     public function mount(): void
     {
         $wizard = Wizard::instance();
+        $this->dispatch('wizardStep', [
+            'step' => 'cooking-context',
+            'context' => $wizard->context->toArray(),
+        ]);
 
         if ($wizard->context->cookingContext === null) {
             $wizard->setCookingContext(CookingContext::from([

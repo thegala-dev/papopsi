@@ -17,11 +17,14 @@ use App\Livewire\Wizard\Steps\StepSummary;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
-Route::get('/invalidate', function () {
-    session()->invalidate();
 
-    return redirect()->to('/');
-})->name('invalidate');
+if (app()->isLocal()) {
+    Route::get('/invalidate', function () {
+        session()->invalidate();
+
+        return redirect()->to('/');
+    })->name('invalidate');
+}
 
 Route::prefix('wizard')
     ->name('wizard.')

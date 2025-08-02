@@ -10,10 +10,8 @@ interface WithSocialShare
     public function getRecipe(): ?RecipeOutput;
 
     #[Computed]
-    public function shareRoute(RecipeOutput $recipe): string;
+    public function shareRouteUrl(): string;
 
     #[Computed]
     public function shareWaMessage(): string;
-
-    public function shareTemplate(string $template, string $shareUrl): string;
 }

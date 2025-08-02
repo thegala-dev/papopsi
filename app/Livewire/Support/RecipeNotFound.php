@@ -6,6 +6,14 @@ use Livewire\Component;
 
 class RecipeNotFound extends Component
 {
+    public function mount(): void
+    {
+        $this->dispatch('error', [
+            'type' => 'not-found',
+            'message' => 'Recipe not found',
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.support.recipe-not-found')

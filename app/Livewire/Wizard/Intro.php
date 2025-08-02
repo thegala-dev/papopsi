@@ -20,6 +20,10 @@ class Intro extends Component
 
     public function mount(): void
     {
+        $this->dispatch('wizardStarted', [
+            'source' => request()->query('source', 'no-page'),
+        ]);
+
         if (! session()->has('requestData')) {
             $this->danger(
                 message: 'Papopsi ha provato a cucinare qualcosa per te, ma sembra che ci sia stato un imprevisto. Niente paura: puoi riprovare tra poco o scriverci per capire cosa è successo.',

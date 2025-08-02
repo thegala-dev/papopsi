@@ -13,7 +13,7 @@
     <!-- start: action buttons -->
     <div class="flex flex-col sm:flex-row justify-center gap-4 text-center">
         <a
-            href="{{ route('wizard.intro') }}"
+            href="{{ route('wizard.intro', ['source' => 'recipe-not-found']) }}"
             class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-papopsi-brand text-white hover:bg-papopsi-brand/90 transition"
         >
             <i data-lucide="home" class="w-4 h-4"></i>

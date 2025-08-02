@@ -17,7 +17,7 @@ class RedirectToStep
 
         if (! $request->session()->has('wizard')) {
             if (! $request->routeIs('wizard.intro')) {
-                return redirect()->route('wizard.intro');
+                return redirect()->route('wizard.intro', ['source' => 'redirect-to-step']);
             }
 
             return $next($request);

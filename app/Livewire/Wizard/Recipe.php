@@ -2,29 +2,36 @@
 
 namespace App\Livewire\Wizard;
 
-use App\Ai\Recipes\RecipeOutput;
 use App\Livewire\Wizard\Concerns\DispatchesToasts;
-use App\Livewire\Wizard\Concerns\WithSocialShare;
-use App\Livewire\Wizard\Contracts\WithSocialShare as WithSocialShareContract;
+use App\Livewire\Wizard\Concerns\RetrievesRecipe;
 use App\Managers\Recipe as RecipeManager;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-class Recipe extends Component implements WithSocialShareContract
+class Recipe extends Component
 {
     use DispatchesToasts,
-        WithSocialShare;
+        RetrievesRecipe;
+
+    public function mount(): void
+    {
+        if (request()->query('track', false)) {
+            $this->dispatch('recipeGenerated', [
+                'recipe' => $this->getRecipe()->toArray(),
+            ]);
+        }
+    }
 
     public function render()
     {
         return view('livewire.wizard.recipe-view')
-            ->with('recipe', $this->getRecipe())
+            ->with('recipe', $recipe = $this->getRecipe())
             ->layoutData([
                 'description' => __('seo.recipe_show.description'),
                 'keywords' => __('seo.recipe_show.keywords'),
-                'ogTitle' => __('seo.recipe_show.og_title'),
+                'ogTitle' => __('seo.recipe_show.og_title', ['title' => $recipe->title]),
                 'ogDescription' => __('seo.recipe_show.og_description'),
-            ])->title(__('seo.recipe_show.title'));
+            ])->title(__('seo.recipe_show.title', ['title' => $recipe->title]));
     }
 
     #[Computed]
@@ -41,19 +48,5 @@ class Recipe extends Component implements WithSocialShareContract
         $manager = new RecipeManager(request: request());
 
         return $manager->limitPerDay() - $manager->recipes->count();
-    }
-
-    public function getRecipe(): ?RecipeOutput
-    {
-        if (session()->has('recipe')) {
-            return session()->get('recipe');
-        }
-
-        $manager = new RecipeManager(request: request());
-        if ($slug = request()->query('recipe')) {
-            return $manager->recipes->firstWhere('slug', $slug);
-        }
-
-        return $manager->recipes->first();
     }
 }

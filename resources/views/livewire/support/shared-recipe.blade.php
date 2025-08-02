@@ -78,31 +78,7 @@
         </div>
     </div>
 
-    <div class="bg-papopsi-muted border border-papopsi-secondary rounded-xl shadow-sm p-4">
-        <div>
-            <h2 class="text-2xl font-bold text-papopsi-secondary">Hai trovato utile questa pagina?</h2>
-            <p class="text-papopsi-muted">Condividila con altri genitori!</p>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-2 mt-4">
-            <button
-                wire:click="copyLink"
-                class="bg-papopsi-secondary hover:bg-papopsi-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition flex gap-2 items-center"
-            >
-                <i data-lucide="copy" class="w-4 h-4"></i>
-                Copia link
-            </button>
-
-            <a
-                href="{{$this->shareWaMessage}}"
-                target="_blank"
-                rel="noopener"
-                class="bg-papopsi-secondary hover:bg-papopsi-secondary text-white px-4 py-2 rounded-md text-sm font-medium transition flex gap-2 items-center"
-            >
-                <i data-lucide="send" class="w-4 h-4"></i>
-                Invia su WhatsApp
-            </a>
-        </div>
-    </div>
+    <livewire:support.share />
 
     <div class="bg-papopsi-info-50 border-l-4 border-papopsi-info p-4 rounded-lg space-y-2">
         <p class="text-sm text-papopsi-info">
@@ -115,7 +91,7 @@
             <a href="{{ config('links.bmac') }}" target="_blank" class="bg-papopsi-info-300 hover:bg-papopsi-info-400 text-white px-4 py-2 rounded-md text-sm font-medium transition">
                 Dona un cucchiaino 🍴
             </a>
-            <a href="{{ route('wizard.intro') }}" class="text-papopsi-info px-4 py-2 text-sm font-medium rounded-md hover:underline">
+            <a href="{{ route('wizard.intro', ['source' => 'shared-recipe']) }}" class="text-papopsi-info px-4 py-2 text-sm font-medium rounded-md hover:underline">
                 Prepara un'altra ricetta 🍲
             </a>
             <a href="{{ config('links.telegram') }}" class="text-papopsi-info px-4 py-2 text-sm font-medium rounded-md hover:underline">

@@ -12,18 +12,6 @@ use Livewire\Attributes\Computed;
  */
 trait WithSocialShare
 {
-    public function encodeRecipe(RecipeOutput $recipe): string
-    {
-        $encoded = base64_encode(gzcompress($recipe->compress()));
-
-        return rtrim(strtr($encoded, '+/', '-_'));
-    }
-
-    public function decodeRecipe(string $base64): RecipeOutput
-    {
-        return RecipeOutput::decompress($base64);
-    }
-
     #[Computed]
     public function shareRouteUrl(): string
     {
@@ -36,8 +24,7 @@ trait WithSocialShare
         return $this->shareTemplate('whatsapp', $this->shareRouteUrl());
     }
 
-    #[Computed]
-    public function shareRoute(RecipeOutput $recipe): string
+    protected function shareRoute(RecipeOutput $recipe): string
     {
         $hash = substr(sha1($encoded = $this->encodeRecipe($recipe)), 0, 8);
         Cache::remember("share:{$hash}", now()->addMonth(), fn () => $encoded);
@@ -45,7 +32,7 @@ trait WithSocialShare
         return route('recipe.share', ['token' => $hash]);
     }
 
-    public function shareTemplate(string $template, string $shareUrl): string
+    protected function shareTemplate(string $template, string $shareUrl): string
     {
         $text = __("interface.share.{$template}", ['cta' => $shareUrl]);
 
