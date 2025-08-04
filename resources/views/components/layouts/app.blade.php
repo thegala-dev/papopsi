@@ -28,6 +28,10 @@
 
     <title>{{ $title ?? __('seo.default.title') }}</title>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ Vite::asset('resources/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ Vite::asset('resources/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ Vite::asset('resources/images/favicon.png') }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>

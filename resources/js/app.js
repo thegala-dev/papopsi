@@ -2,6 +2,10 @@ import { Livewire } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import { createIcons, Menu, Megaphone, Baby, Home, Utensils, UtensilsCrossed, Sparkles, Coffee, ChefHat, ShieldQuestion, Globe, Clock, Smile, User,
     BookUser, Carrot, RefreshCw, CheckCircle, XCircle, Timer, Bookmark, Share, Info, Copy, Send, Heart} from 'lucide';
 
+import.meta.glob([
+    '../images/**'
+]);
+
 // Icons
 const initIcons = () => {
     createIcons({
