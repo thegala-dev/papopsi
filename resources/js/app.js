@@ -1,13 +1,13 @@
 import { Livewire } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import { createIcons, Menu, Megaphone, Baby, Home, Utensils, UtensilsCrossed, Sparkles, Coffee, ChefHat, ShieldQuestion, Globe, Clock, Smile, User,
-    BookUser, Carrot, RefreshCw, CheckCircle, XCircle, Timer, Bookmark, Share, Info, Copy, Send} from 'lucide';
+    BookUser, Carrot, RefreshCw, CheckCircle, XCircle, Timer, Bookmark, Share, Info, Copy, Send, Heart} from 'lucide';
 
 // Icons
 const initIcons = () => {
     createIcons({
         icons: {
             Menu, Megaphone, Baby, Home, Utensils, UtensilsCrossed, Sparkles, Coffee, ChefHat, ShieldQuestion, Globe, Clock, Smile, User, BookUser, Carrot,
-            RefreshCw, CheckCircle, XCircle, Timer, Bookmark, Share, Info, Copy, Send
+            RefreshCw, CheckCircle, XCircle, Timer, Bookmark, Share, Info, Copy, Send, Heart
         }
     })
 };
